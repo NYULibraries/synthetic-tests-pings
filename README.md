@@ -1,6 +1,6 @@
 # Synthetic Tests
 
-Runs a series of AWS Lambdas synthetic tests against NYU Libraries Web Services applications and vendor applications.
+Runs a series of AWS Lambda synthetic tests against NYU Libraries Web Services applications and vendor applications.
 
 Synthetic tests run on a schedule and report based on availability and response time.
 
