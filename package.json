@@ -1,0 +1,16 @@
+{
+  "name": "synthetic-tests",
+  "version": "0.0.1",
+  "description": "AWS Lambda synthetic tests against NYU Libraries Web Services applications",
+  "main": "handler.js",
+  "repository": "https://github.com/NYULibraries/synthetic-tests",
+  "author": "Barnaby Alter",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "deploy": "bundle install --deployment && serverless deploy"
+  },
+  "devDependencies": {
+    "serverless": "^1.67.3"
+  }
+}

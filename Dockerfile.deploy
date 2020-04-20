@@ -1,4 +1,4 @@
-FROM nodejs:12.x-alpine
+FROM node:12-alpine
 
 ENV INSTALL_PATH /app
 
