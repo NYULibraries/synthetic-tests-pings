@@ -1,0 +1,13 @@
+FROM nodejs:12.x-alpine
+
+ENV INSTALL_PATH /app
+
+WORKDIR $INSTALL_PATH
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --ignore-optional \
+  && yarn global add serverless
+
+COPY . .
+
+CMD ["serverless", "deploy", "--stage=$STAGE"]

@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+    image: on-campus-restricted-requests
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      S3_BUCKET: 
+      LAMBDA_ROLE: 
+      STAGE: 
+    env_file:
+      - .env
+    volumes:
+      - .:/app
