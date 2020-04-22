@@ -1,16 +1,28 @@
 version: '3.7'
 
+x-default-volumes: &default-volumes
+  volumes:
+    - .:/var/task
+
 services:
   dev:
     build:
       context: .
       dockerfile: Dockerfile
+    <<: *default-volumes
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: ''
+    <<: *default-volumes
 
   deploy:
     build:
       context: .
       dockerfile: Dockerfile.deploy
-    image: on-campus-restricted-requests
+    image: synthetic-tests
     environment:
       AWS_ACCESS_KEY_ID:
       AWS_SECRET_ACCESS_KEY:
@@ -19,5 +31,4 @@ services:
       STAGE: 
     env_file:
       - .env
-    volumes:
-      - .:/app
+    <<: *default-volumes

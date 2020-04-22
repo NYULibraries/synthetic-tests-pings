@@ -11,6 +11,7 @@
     "deploy": "bundle install --deployment && serverless deploy"
   },
   "devDependencies": {
+    "jest": "^25.4.0",
     "serverless": "^1.67.3"
   }
 }
