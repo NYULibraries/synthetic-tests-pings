@@ -3,26 +3,31 @@ version: '3.7'
 x-default-volumes: &default-volumes
   volumes:
     - .:/var/task
+    - /opt/node_modules
+
+x-default_env: &default-env
+  environment:
+    TEST_URL: https://bobcat.library.nyu.edu
 
 services:
   dev:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
+    <<: *default-env
     <<: *default-volumes
 
   test:
     build:
       context: .
-      dockerfile: Dockerfile
-    entrypoint: ''
+      dockerfile: Dockerfile.deploy
+    entrypoint: []
+    command: ["yarn", "test"]
+    <<: *default-env
     <<: *default-volumes
 
   deploy:
     build:
       context: .
       dockerfile: Dockerfile.deploy
-    image: synthetic-tests
     environment:
       AWS_ACCESS_KEY_ID:
       AWS_SECRET_ACCESS_KEY:

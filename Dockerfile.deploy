@@ -1,12 +1,12 @@
 FROM node:12-alpine
 
-ENV INSTALL_PATH /app
-
-WORKDIR $INSTALL_PATH
+WORKDIR /opt
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-optional \
   && yarn global add serverless
+
+WORKDIR /var/task
 
 COPY . .
 
