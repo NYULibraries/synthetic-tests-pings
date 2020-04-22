@@ -1,11 +1,15 @@
 'use strict';
 
-module.exports.syntheticTest = async event => {
+const checkUrl = require('./lib/syntheticTest').checkUrl;
+
+module.exports.syntheticTest = async (event, context) => {
+  const testVariables = process.env;
+
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
+        message: checkUrl(testVariables.TEST_URL),
         input: event,
       },
       null,

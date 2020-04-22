@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "deploy": "bundle install --deployment && serverless deploy"
+    "deploy": "bundle install --deployment && serverless deploy",
+    "test": "jest"
   },
   "devDependencies": {
     "jest": "^25.4.0",
