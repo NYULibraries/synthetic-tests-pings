@@ -35,7 +35,9 @@ functions:
     events:
       - schedule: rate(10 minutes)
     environment:
-      URL: "https://bobcat.library.nyu.edu"
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYU"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
 
   aleph:
     handler: handler.syntheticTest
@@ -45,4 +47,6 @@ functions:
     events:
       - schedule: rate(10 minutes)
     environment:
-      URL: "https://aleph.library.nyu.edu"
+      TEST_URL: "https://aleph.library.nyu.edu"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400

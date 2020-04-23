@@ -16,6 +16,13 @@ Report via a Slack hook to `libtechnyu` via the `#synthetic-tests` channel. Repo
 
 Using Jest to unit-test the JavaScript
 
+## Serverless
+
+[Serverless]() should be able to deploy all these functions with schedules and without API Gateway
+
 ## Roadmap
 
-- Functionality tests as well using something like Cypress
+- Deploy via CircleCI - see [other serverless functions](https://github.com/NYULibraries/bobcat-linker/blob/master/.circleci/config.yml) for example
+- Create badges for [coverage](https://www.npmjs.com/package/jest-coverage-badges) and CI in this README
+- Include functionality tests using [WebDriver IO](https://webdriver.io/), or the like
+- Update this README to reflect the actualy usage and functionality.

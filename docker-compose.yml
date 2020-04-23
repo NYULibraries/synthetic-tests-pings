@@ -2,7 +2,13 @@ version: '3.7'
 
 x-default-volumes: &default-volumes
   volumes:
-    - .:/var/task
+    - ./lib:/var/task/lib
+    - ./spec:/var/task/spec
+    - ./handler.js:/var/task/handler.js
+    - ./package.json:/var/task/package.json
+    - ./yarn.lock:/var/task/yarn.lock
+    - ./serverless.yml:/var/task/serverless.yml
+    - ./jest.config.js:/var/task/jest.config.js
     - /opt/node_modules
 
 x-default_env: &default-env
@@ -11,14 +17,18 @@ x-default_env: &default-env
 
 services:
   dev:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile.lambda
+    image: synthetic-tests-lambda
     <<: *default-env
     <<: *default-volumes
 
   test:
     build:
       context: .
-      dockerfile: Dockerfile.deploy
+      dockerfile: Dockerfile.node
+    image: synthetic-tests-node
     entrypoint: []
     command: ["yarn", "test"]
     <<: *default-env
@@ -27,7 +37,8 @@ services:
   deploy:
     build:
       context: .
-      dockerfile: Dockerfile.deploy
+      dockerfile: Dockerfile.node
+    image: synthetic-tests-node
     environment:
       AWS_ACCESS_KEY_ID:
       AWS_SECRET_ACCESS_KEY:

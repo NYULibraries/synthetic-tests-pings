@@ -6,6 +6,8 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-optional \
   && yarn global add serverless
 
+ENV PATH=/opt/node_modules/.bin:${PATH}
+
 WORKDIR /var/task
 
 COPY . .
