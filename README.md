@@ -12,17 +12,30 @@ Each test can be scheduled on its own cron schedule and reports out about failed
 
 Report via a Slack hook to `libtechnyu` via the `#synthetic-tests` channel. Report with response code and time.
 
-## Testing the tests
+## Unit-testing the tests
 
 Using Jest to unit-test the JavaScript
 
+```
+docker-compose run test
+```
+
+## Integration testing
+
+Test that the lambdaci container returns successfully before deploying the function
+
+```
+docker-compose run dev handler.syntheticTest
+```
+
 ## Serverless
 
-[Serverless]() should be able to deploy all these functions with schedules and without API Gateway
+[Serverless](https://github.com/serverless/serverless) should be able to deploy all these functions with schedules and _without API Gateway_
 
 ## Roadmap
 
 - Deploy via CircleCI - see [other serverless functions](https://github.com/NYULibraries/bobcat-linker/blob/master/.circleci/config.yml) for example
 - Create badges for [coverage](https://www.npmjs.com/package/jest-coverage-badges) and CI in this README
 - Include functionality tests using [WebDriver IO](https://webdriver.io/), or the like
+- Prettifying of messages in Slack
 - Update this README to reflect the actualy usage and functionality.

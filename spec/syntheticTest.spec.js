@@ -5,3 +5,4 @@ describe('checkUrl', () => {
     expect(syntheticTest.checkUrl('https://test.url')).toEqual('URL https://test.url responded!');
   });
 });
+
