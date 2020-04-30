@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile.lambda
     image: synthetic-tests-lambda
     <<: *default-env
-    <<: *default-volumes
+    #<<: *default-volumes
 
   test:
     build:
@@ -32,7 +32,7 @@ services:
     entrypoint: []
     command: ["yarn", "test"]
     <<: *default-env
-    <<: *default-volumes
+    #<<: *default-volumes
 
   deploy:
     build:
