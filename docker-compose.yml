@@ -32,7 +32,7 @@ services:
     entrypoint: []
     command: ["yarn", "test"]
     <<: *default-env
-    <<: *default-volumes
+    #<<: *default-volumes
 
   deploy:
     build:

@@ -1,0 +1,26 @@
+docker-defaults: &docker-defaults
+  docker:
+    - image: quay.io/nyulibraries/circleci_docker:18.06.3-dc-1.24.1-0
+  working_directory: ~/app
+
+docker_build: &docker_build
+  run:
+    name: Docker build
+    command: |
+      docker-compose build test
+
+test: &test
+  run:
+    name: Test
+    command: |
+      docker-compose run test
+
+version: 2.1
+jobs:
+  test:
+    <<: *docker-defaults
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *docker_build
+      - *test
