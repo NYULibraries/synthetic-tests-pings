@@ -8,13 +8,19 @@ docker_build: &docker_build
     name: Docker build
     command: |
       touch .env
-      docker-compose build test
+      docker-compose build test dev
 
 test: &test
   run:
     name: Test
     command: |
       docker-compose run test
+
+run_handler: &run_handler
+  run:
+    name: Run handler
+    command: |
+      docker-compose run dev handler.syntheticTest
 
 version: 2.1
 jobs:
@@ -25,3 +31,4 @@ jobs:
       - setup_remote_docker
       - *docker_build
       - *test
+      - *run_handler
