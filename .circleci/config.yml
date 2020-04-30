@@ -7,6 +7,7 @@ docker_build: &docker_build
   run:
     name: Docker build
     command: |
+      touch .env
       docker-compose build test
 
 test: &test
