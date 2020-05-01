@@ -3,9 +3,9 @@ service: synthetic-tests
 provider:
   name: aws
   runtime: nodejs10.x
-  region: ${opt:region, 'us-east-1'}
+  region: ${env:AWS_REGION, 'us-east-1'}
   role: ${env:LAMBDA_ROLE}
-  stage: ${opt:stage, 'dev'}
+  stage: ${env:SERVERLESS_STAGE, 'dev'}
   deploymentBucket:
     name: ${env:S3_BUCKET}
 
