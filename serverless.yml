@@ -29,7 +29,7 @@ package:
 functions:
   primo:
     handler: handler.syntheticTest
-    name: ${self:service}
+    name: ${self:service}-primo-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
     events:
@@ -41,7 +41,8 @@ functions:
 
   aleph:
     handler: handler.syntheticTest
-    name: ${self:service}
+    name: ${self:service}-aleph-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
     # memorySize: 128
     # timeout: 5
     events:

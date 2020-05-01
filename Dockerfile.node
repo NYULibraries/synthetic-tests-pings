@@ -12,4 +12,5 @@ WORKDIR /var/task
 
 COPY . .
 
-CMD ["serverless", "deploy", "--stage=$STAGE"]
+# must run in shell for env var interpolation
+CMD ["sh", "-c", "serverless deploy --stage=$STAGE --region=$AWS_REGION"]
