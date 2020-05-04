@@ -39,10 +39,10 @@ docker-compose run test
 
 ## Integration testing
 
-TODO: Test that the lambdaci container returns successfully before deploying the function
+Test that the lambdaci container returns successfully before deploying the function
 
 ```
-docker-compose run dev handler.syntheticTest
+docker-compose run dev
 ```
 
 ## Serverless
