@@ -10,7 +10,24 @@ Each test can be scheduled on its own cron schedule and reports out about failed
 
 ## Reporting
 
-Report via a Slack hook to `libtechnyu` via the `#synthetic-tests` channel. Report with response code and time.
+TODO: Report via a Slack hook to `libtechnyu` via the `#synthetic-tests` channel. Report with response code and time.
+
+## Deployment
+
+You must specify the following as environment variables either in the host environment or in a `.env` file:
+
+```
+LAMBDA_ROLE
+S3_BUCKET
+SERVERLESS_STAGE
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION
+```
+
+Then run `docker-compose run deploy`
+
+To invoke a function, run `docker-compose run invoke $FUNCTION_NAME`
 
 ## Unit-testing the tests
 
@@ -25,7 +42,7 @@ docker-compose run test
 Test that the lambdaci container returns successfully before deploying the function
 
 ```
-docker-compose run dev handler.syntheticTest
+docker-compose run dev
 ```
 
 ## Serverless

@@ -12,4 +12,4 @@ WORKDIR /var/task
 
 COPY . .
 
-CMD ["serverless", "deploy", "--stage=$STAGE"]
+CMD ["serverless", "deploy"]

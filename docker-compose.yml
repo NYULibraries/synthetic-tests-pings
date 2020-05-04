@@ -1,5 +1,11 @@
 version: '3.7'
 
+x-serverless-build: &serverless-build
+  build:
+    context: .
+    dockerfile: Dockerfile.node
+  image: synthetic-tests-node
+
 x-default-volumes: &default-volumes
   volumes:
     - ./lib:/var/task/lib
@@ -11,9 +17,20 @@ x-default-volumes: &default-volumes
     - ./jest.config.js:/var/task/jest.config.js
     - /opt/node_modules
 
-x-default_env: &default-env
+x-test_env: &test-env
   environment:
     TEST_URL: https://bobcat.library.nyu.edu
+
+x-serverless_env: &serverless-env
+  environment:
+    AWS_ACCESS_KEY_ID:
+    AWS_SECRET_ACCESS_KEY:
+    S3_BUCKET:
+    LAMBDA_ROLE:
+    SERVERLESS_STAGE:
+    AWS_REGION:
+  env_file:
+      - .env
 
 services:
   dev:
@@ -21,30 +38,23 @@ services:
       context: .
       dockerfile: Dockerfile.lambda
     image: synthetic-tests-lambda
-    <<: *default-env
+    command: ["handler.syntheticTest"]
+    <<: *test-env
     #<<: *default-volumes
 
   test:
-    build:
-      context: .
-      dockerfile: Dockerfile.node
-    image: synthetic-tests-node
-    entrypoint: []
+    <<: *serverless-build
     command: ["yarn", "test"]
-    <<: *default-env
+    <<: *test-env
     #<<: *default-volumes
 
   deploy:
-    build:
-      context: .
-      dockerfile: Dockerfile.node
-    image: synthetic-tests-node
-    environment:
-      AWS_ACCESS_KEY_ID:
-      AWS_SECRET_ACCESS_KEY:
-      S3_BUCKET: 
-      LAMBDA_ROLE: 
-      STAGE: 
-    env_file:
-      - .env
+    <<: *serverless-build
+    <<: *serverless-env
+    <<: *default-volumes
+
+  invoke:
+    <<: *serverless-build
+    entrypoint: ["serverless", "invoke", "-f"]
+    <<: *serverless-env
     <<: *default-volumes
