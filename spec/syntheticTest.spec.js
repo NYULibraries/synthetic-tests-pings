@@ -25,8 +25,9 @@ describe('testHttpResponse', () => {
     it('should return true for a matching error status code', () => {
       expect(syntheticTest.testHttpResponse({ url: 'http://example.com/not/existing/path', status: 404, responseTime: 500 })).toBeTruthy();
     });
-
-    test.todo('should return false for response not received in specified time');
+    it('should return false for response not received in specified time', () => {
+      expect(syntheticTest.testHttpResponse({ url: 'http://example.com/not/existing/path', status: 404, responseTime: 1 })).toBeFalsy();
+    });
 
     it('should return false for a wrong status code', () => {
       expect(syntheticTest.testHttpResponse({ url: 'http://example.com/not/existing/path', status: 500, responseTime: 500 })).toBeFalsy();
@@ -38,7 +39,10 @@ describe('testHttpResponse', () => {
       expect(syntheticTest.testHttpResponse({ url: 'http://google.com/', status: 301, responseTime: 500 })).toBeTruthy();
     });
 
-    test.todo('should return false for response not received in specified time');
+    it('should return false for response not received in specified time', () => {
+      expect(syntheticTest.testHttpResponse({ url: 'http://google.com', status: 301, responseTime: 1 })).toBeFalsy();
+    });
+
 
     it('should return false for an incorrect status code', () => {
       expect(syntheticTest.testHttpResponse({ url: 'http://google.com/', status: 302, responseTime: 500 })).toBeFalsy();
@@ -53,7 +57,14 @@ describe('testHttpResponse', () => {
       })).toBeTruthy();
     });
 
-    test.todo('should return false with correct redirect location for response not received in specified time');
+    it('should return false with correct redirect location for response not received in specified time', () => {
+      expect(syntheticTest.testHttpResponse({
+        url: 'http://google.com/',
+        status: 301,
+        responseTime: 1,
+        redirectLocation: 'https://www.google.com',
+      })).toBeFalsy();
+    });
 
     it('should return false for the correct status code and incorrect redirect location', () => {
       expect(syntheticTest.testHttpResponse({
