@@ -1,6 +1,12 @@
 const syntheticTest = require('../lib/syntheticTest');
 
 describe('testHttpResponse', () => {
+  describe('without a response url', () => {
+    it('should throw an error', () => {
+      expect(() => syntheticTest.testHttpResponse()).toThrow();
+    });
+  });
+
   describe('for a successful response url', () => {
     it('should return true for a matching success status code', () => {
       expect(syntheticTest.testHttpResponse({ url: 'http://example.com/', status: 200, responseTime: 500 })).toBeTruthy();
