@@ -44,7 +44,7 @@ services:
 
   test:
     <<: *serverless-build
-    command: ["yarn", "test"]
+    command: ["yarn", "test", "--verbose"]
     #<<: *test-env
     #<<: *default-volumes
 
