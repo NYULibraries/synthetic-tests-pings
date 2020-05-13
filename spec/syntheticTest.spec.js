@@ -1,8 +1,8 @@
 const syntheticTest = require('../lib/syntheticTest');
 
 describe('adapt', () => {
-  it('should return http as the option', () => {
-    expect(()=> syntheticTest.adapt('http://example.com/').get).toEqual('require(\'http\')')
+  it('identify and return http', () => {
+    expect(syntheticTest.adapt('http://example.com/')).toEqual(require("http"))
   })
 })
 
