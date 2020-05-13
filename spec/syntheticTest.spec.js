@@ -1,7 +1,13 @@
 const syntheticTest = require('../lib/syntheticTest');
 
+describe('adapt', () => {
+  it('should return http as the option', () => {
+    expect(()=> syntheticTest.adapt('http://example.com/').get).toEqual('require(\'http\')')
+  })
+})
+
 describe('testHttpResponse', () => {
-  describe('without a response url', () => {
+ describe('without a response url', () => {
     it('should throw an error', () => {
       expect(() => syntheticTest.testHttpResponse()).toThrow();
     });
