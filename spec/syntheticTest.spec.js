@@ -6,6 +6,25 @@ describe('adapt', () => {
   })
 })
 
+describe('httpResponse', () => {
+  describe('without a response url', () => {
+        it('should throw an error', () => {
+            expect.assertions(1);
+						return syntheticTest
+							.httpResponse()
+							.catch((e) => expect(e.message).toMatch('Received undefined'));
+				});
+  })
+    describe('with a string that is not a url', () => {
+        it('should throw an error', () => {
+					expect.assertions(1);
+					return syntheticTest
+						.httpResponse('watermelon')
+						.catch((e) => expect(e).toMatch('Error'));
+				});
+  });
+})
+
 describe('testHttpResponse', () => {
  describe('without a response url', () => {
     it('should throw an error', () => {
@@ -15,7 +34,13 @@ describe('testHttpResponse', () => {
 
   describe('for a successful response url', () => {
     it('should return true for a matching success status code', () => {
-      expect(syntheticTest.testHttpResponse({ url: 'http://example.com/', status: 200, responseTime: 500 })).toBeTruthy();
+      expect(
+			 syntheticTest.testHttpResponse({
+					url: 'http://example.com/',
+					status: 200,
+					responseTime: 500,
+				})
+			).toBeTruthy();
     });
 
     it('should return false for response not received in specified time', () => {
@@ -83,7 +108,16 @@ describe('testHttpResponse', () => {
   });
 });
 
+syntheticTest.testHttpResponse =  jest.fn();
+
 describe('checkUrl', () => {
-  test.todo('should call sendMessage when testHttpResponse returns false');
-  test.todo('should not call sendMessage when testHttpResponse returns true');
+  it('should call sendMessage when testHttpResponse returns false', ()=>{
+    expect(syntheticTest.checkUrl({ url: 'https://google.com', status: 201, responseTime: 1 })).toBe(false);
+    expect(syntheticTest.testHttpResponse).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not call sendMessage when testHttpResponse returns true', ()=> {
+    expect(syntheticTest.checkUrl({ url: 'https://www.example.com', status: 200, responseTime: 500 })).toBe(true);
+    expect(syntheticTest.testHttpResponse).toHaveBeenCalledTimes(0);
+  });
 });
