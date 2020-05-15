@@ -153,17 +153,3 @@ describe('testHttpResponse', () => {
     });
   });
 });
-
-//syntheticTest.testHttpResponse =  jest.fn();
-
-describe('checkUrl', () => {
-  it('should call sendMessage when testHttpResponse returns false', ()=>{
-    expect(syntheticTest.checkUrl({ url: 'https://www.google.com', status: 201, responseTime: 1 })).toBe(false);
-    expect(syntheticTest.testHttpResponse).toHaveBeenCalledTimes(1);
-  });
-
-  it('should not call sendMessage when testHttpResponse returns true', ()=> {
-    expect(syntheticTest.checkUrl({ url: 'https://www.example.com', status: 200, responseTime: 500 })).toBe(true);
-    expect(syntheticTest.testHttpResponse).toHaveBeenCalledTimes(0);
-  });
-});
