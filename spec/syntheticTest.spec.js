@@ -96,7 +96,7 @@ describe('testHttpResponse', () => {
   describe('for a redirecting url', () => {
     it('should return true for the correct status code', async () => {
       const test = await syntheticTest.testHttpResponse({ 
-        url: 'http://www.google.com/', 
+        url: 'http://google.com/', 
         status: 301, 
         responseTime: 500 
         });
@@ -105,7 +105,7 @@ describe('testHttpResponse', () => {
 
     it('should return false for response not received in specified time', async () => {
       const test = await 	syntheticTest.testHttpResponse({
-					url: 'http://www.google.com',
+					url: 'http://google.com',
 					status: 301,
 					responseTime: 1,
 				});
@@ -124,20 +124,20 @@ describe('testHttpResponse', () => {
 
     it('should return true for the correct status code and redirect location', async () => {
       const test = await syntheticTest.testHttpResponse({
-        url: 'http://www.google.com/',
+        url: 'http://google.com/',
         status: 301,
         responseTime: 500,
-        redirectLocation: 'https://www.google.com',
+        redirectLocation: 'http://www.google.com/',
       });
       expect(test).toBe(true);
     });
 
     it('should return false with correct redirect location for response not received in specified time', async () => {
       const test = await syntheticTest.testHttpResponse({
-					url: 'http://www.google.com/',
+					url: 'http://google.com/',
 					status: 301,
 					responseTime: 1,
-					redirectLocation: 'https://www.google.com',
+					redirectLocation: 'http://www.google.com/',
 				});
 			expect(test).toBe(false);
     });
@@ -147,7 +147,7 @@ describe('testHttpResponse', () => {
 					url: 'http://www.google.com',
 					status: 302,
 					responseTime: 500,
-					redirectLocation: 'https://www.google.com',
+					redirectLocation: 'https://www.example.com/',
 				});
 			expect(test).toBe(false);
     });
