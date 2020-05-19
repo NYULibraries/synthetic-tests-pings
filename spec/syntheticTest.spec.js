@@ -39,8 +39,7 @@ describe('testHttpResponse', () => {
     it('should return true for a matching success status code', async () => {
      const test = await syntheticTest.testHttpResponse({
 				url: 'http:/www.example.com/',
-				status: 200,
-				responseTime: 500,
+				status: 200
 			});
       expect(test).toBe(true);
     });
@@ -68,8 +67,7 @@ describe('testHttpResponse', () => {
     it('should return true for a matching error status code', async () => {
       const test = await syntheticTest.testHttpResponse({ 
           url: 'http://www.example.com/not/existing/path', 
-          status: 404, 
-          responseTime: 500 
+          status: 404
           });
       expect(test).toBe(true);
     });
@@ -97,8 +95,7 @@ describe('testHttpResponse', () => {
     it('should return true for the correct status code', async () => {
       const test = await syntheticTest.testHttpResponse({ 
         url: 'http://google.com/', 
-        status: 301, 
-        responseTime: 500 
+        status: 301
         });
       expect(test).toBe(true);
     });
@@ -116,8 +113,7 @@ describe('testHttpResponse', () => {
     it('should return false for an incorrect status code', async () => {
       const test = await syntheticTest.testHttpResponse({
 					url: 'http://www.google.com/',
-					status: 302,
-					responseTime: 500,
+					status: 302
 				});
 			expect(test).toMatchObject({ case: 'status' });
     });
@@ -146,7 +142,6 @@ describe('testHttpResponse', () => {
       const test = await syntheticTest.testHttpResponse({
 					url: 'http://google.com',
 					status: 301,
-					responseTime: 500,
 					redirectLocation: 'https://www.example.com/',
 				});
 			expect(test).toMatchObject({ case: 'relocation' });
