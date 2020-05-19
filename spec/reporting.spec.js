@@ -1,10 +1,18 @@
 const reporting = require('../lib/reporting');
 
-describe('sendMessage', () => {
+describe('formatMessage', () => {
   it('should return a string response', () => {
-    expect(reporting.sendMessage('Test failed!')).toEqual('Send Test failed! to Slack!');
+    expect(typeof reporting.formatMessage({ case: '', actual: '', expected: ''})).toEqual('string');
   });
 
-  test.todo('should send a message to slack API');
-  test.todo('should format its message based on parameters');
+  describe('should format its message based on parameters', () => {
+    it('should return accurate message for status trigger', () => {
+    const testParams = { case: 'status', actual: 201, expected: 200 };
+		expect(reporting.formatMessage(testParams)).toEqual('Test failed! Unexpected status. Expected: 200, received: 201');
+    })
+  });
 });
+
+describe('sendMessage', () => {
+  test.todo('should send a message to slack API');
+})
