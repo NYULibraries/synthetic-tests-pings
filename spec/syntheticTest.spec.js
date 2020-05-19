@@ -51,7 +51,7 @@ describe('testHttpResponse', () => {
         status: 200, 
         responseTime: 1 
         });
-        expect(test).toBe(false);
+        expect(test).toMatchObject({ case: 'time' });
     });
 
     it('should return false for a wrong status code', async () => {
@@ -60,7 +60,7 @@ describe('testHttpResponse', () => {
 					status: 201,
 					responseTime: 500,
 				});
-			expect(test).toBe(false);
+			expect(test).toMatchObject({ case: 'status' });
     });
   });
 
@@ -80,7 +80,7 @@ describe('testHttpResponse', () => {
 					status: 404,
 					responseTime: 1,
 				});
-		  expect(test).toBe(false);
+		  expect(test).toMatchObject({ case: 'time' });
     });
 
     it('should return false for a wrong status code', async () => {
@@ -89,7 +89,7 @@ describe('testHttpResponse', () => {
 					status: 500,
 					responseTime: 500,
 				});
-			expect(test).toBe(false);
+			expect(test).toMatchObject({ case: 'status' });
     });
   });
 
@@ -109,7 +109,7 @@ describe('testHttpResponse', () => {
 					status: 301,
 					responseTime: 1,
 				});
-			expect(test).toBe(false);
+			expect(test).toMatchObject({ case: 'time' });
     });
 
 
@@ -119,7 +119,7 @@ describe('testHttpResponse', () => {
 					status: 302,
 					responseTime: 500,
 				});
-			expect(test).toBe(false);
+			expect(test).toMatchObject({ case: 'status' });
     });
 
     it('should return true for the correct status code and redirect location', async () => {
@@ -139,17 +139,17 @@ describe('testHttpResponse', () => {
 					responseTime: 1,
 					redirectLocation: 'http://www.google.com/',
 				});
-			expect(test).toBe(false);
+			expect(test).toMatchObject({ case: 'time' });
     });
 
     it('should return false for the correct status code and incorrect redirect location', async () => {
       const test = await syntheticTest.testHttpResponse({
-					url: 'http://www.google.com',
-					status: 302,
+					url: 'http://google.com',
+					status: 301,
 					responseTime: 500,
 					redirectLocation: 'https://www.example.com/',
 				});
-			expect(test).toBe(false);
+			expect(test).toMatchObject({ case: 'relocation' });
     });
   });
 });
