@@ -2,9 +2,9 @@ const reporting = require("../lib/reporting");
 
 describe("formatMessage", () => {
   it("should throw an error if empty/wrong type", () => {
-    expect(()=>reporting.formatMessage()).toThrow()
+    expect(() => reporting.formatMessage()).toThrow();
     expect(() => reporting.formatMessage("watermelon")).toThrow();
-  })
+  });
 
   it("should return a string response", () => {
     expect(
@@ -21,5 +21,11 @@ describe("formatMessage", () => {
 });
 
 describe("sendMessage", () => {
-  test.todo("should send a message to slack API");
+  const FakeSlack = () => {
+    return { statusCode: 200, response: "ok" };
+  };
+  reporting.makeRequest = jest.fn(FakeSlack);
+  it("should send a request to Slack", () => {
+    expect(reporting.sendMessage()).toBeTruthy();
+  });
 });

@@ -2,7 +2,9 @@ const syntheticTest = require("../lib/syntheticTest");
 
 describe("adapt", () => {
   it("identify and return http", () => {
-    expect(syntheticTest.adapt("http://www.example.com/")).toEqual(require("http"));
+    expect(syntheticTest.adapt("http://www.example.com/")).toEqual(
+      require("http")
+    );
   });
 });
 
