@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const { checkUrl } = require('./lib/syntheticTest');
+const { checkUrl } = require("./lib/syntheticTest");
 
 module.exports.syntheticTest = async (event, context) => {
   const testVariables = {
@@ -17,7 +17,7 @@ module.exports.syntheticTest = async (event, context) => {
         input: event,
       },
       null,
-      2,
+      2
     ),
   };
 };

@@ -17,7 +17,7 @@ package:
   exclude:
     - node_modules/**/*
     - package.json
-    - yarn.lock 
+    - yarn.lock
     - Dockerfile
     - docker-compose.yml
     - spec/*
