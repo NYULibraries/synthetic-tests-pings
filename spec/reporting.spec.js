@@ -1,4 +1,7 @@
 const reporting = require("../lib/reporting");
+const axios = require("axios");
+
+jest.mock('axios');
 
 describe("formatMessage", () => {
   it("should throw an error if empty/wrong type", () => {
@@ -15,17 +18,17 @@ describe("formatMessage", () => {
   it("should return accurate message for status trigger", () => {
     const testParams = { case: "status", actual: 201, expected: 200 };
     expect(reporting.formatMessage(testParams)).toEqual(
-      "Test failed! Unexpected status. Expected: 200, received: 201"
+      "Test failed! Unexpected status - Expected: 200, received: 201"
     );
   });
 });
 
-describe("sendMessage", () => {
-  const FakeSlack = () => {
-    return { statusCode: 200, response: "ok" };
-  };
-  reporting.makeRequest = jest.fn(FakeSlack);
-  it("should send a request to Slack", () => {
-    expect(reporting.sendMessage()).toBeTruthy();
+describe("sendMessage", () => {  
+  it("should resolve the request with 200", async () => {
+    const res = { 
+      status: 200
+    }
+    axios.post.mockResolvedValue(res);
+    return reporting.request({}).then(data => expect(data.status).toEqual(200))
   });
 });
