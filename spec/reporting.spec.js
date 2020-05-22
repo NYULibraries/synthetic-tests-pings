@@ -1,7 +1,7 @@
 const reporting = require("../lib/reporting");
 const axios = require("axios");
 
-jest.mock('axios');
+jest.mock("axios");
 
 describe("formatMessage", () => {
   it("should throw an error if empty/wrong type", () => {
@@ -23,12 +23,14 @@ describe("formatMessage", () => {
   });
 });
 
-describe("sendMessage", () => {  
+describe("sendMessage", () => {
   it("should resolve the request with 200", async () => {
-    const res = { 
-      status: 200
-    }
+    const res = {
+      status: 200,
+    };
     axios.post.mockResolvedValue(res);
-    return reporting.request({}).then(data => expect(data.status).toEqual(200))
+    return reporting
+      .request({})
+      .then((data) => expect(data.status).toEqual(200));
   });
 });
