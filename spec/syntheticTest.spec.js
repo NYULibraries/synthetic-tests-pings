@@ -1,35 +1,8 @@
 const syntheticTest = require("../lib/syntheticTest");
 
-describe("adapt", () => {
-  it("identify and return http", () => {
-    expect(syntheticTest.adapt("http://www.example.com/")).toEqual(
-      require("http")
-    );
-  });
-});
-
-describe("httpResponse", () => {
-  describe("without a response url", () => {
-    it("should throw an error", () => {
-      expect.assertions(1);
-      return syntheticTest
-        .httpResponse()
-        .catch((e) => expect(e.message).toMatch("Received undefined"));
-    });
-  });
-  describe("with a string that is not a url", () => {
-    it("should throw an error", () => {
-      expect.assertions(1);
-      return syntheticTest
-        .httpResponse("watermelon")
-        .catch((e) => expect(e).toMatch("Error"));
-    });
-  });
-});
-
 describe("testHttpResponse", () => {
   describe("without a response url", () => {
-    it("should throw an error", () => {
+    it.only("should throw an error", () => {
       expect.assertions(1);
       return syntheticTest
         .httpResponse()
@@ -40,7 +13,7 @@ describe("testHttpResponse", () => {
   describe("for a successful response url", () => {
     it("should return true for a matching success status code", async () => {
       const test = await syntheticTest.testHttpResponse({
-        url: "http:/www.example.com/",
+        url: "http://www.example.com/",
         status: 200,
       });
       expect(test).toBe(true);
