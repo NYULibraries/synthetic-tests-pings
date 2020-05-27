@@ -1,6 +1,6 @@
 const syntheticTest = require("../lib/syntheticTest");
 
-// describe("testHttpResponse", () => {
+describe("testHttpResponse", () => {
 //   describe("without a response url", () => {
 //     it.only("should throw an error", () => {
 //       expect.assertions(1);
