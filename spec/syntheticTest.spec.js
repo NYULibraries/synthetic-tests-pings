@@ -1,14 +1,14 @@
 const syntheticTest = require("../lib/syntheticTest");
 
-describe("testHttpResponse", () => {
-  describe("without a response url", () => {
-    it.only("should throw an error", () => {
-      expect.assertions(1);
-      return syntheticTest
-        .httpResponse()
-        .catch((e) => expect(e.message).toMatch("Received undefined"));
-    });
-  });
+// describe("testHttpResponse", () => {
+//   describe("without a response url", () => {
+//     it.only("should throw an error", () => {
+//       expect.assertions(1);
+//       return syntheticTest
+//         .httpResponse()
+//         .catch((e) => expect(e.message).toMatch("Received undefined"));
+//     });
+//   });
 
   describe("for a successful response url", () => {
     it("should return true for a matching success status code", async () => {
