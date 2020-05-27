@@ -2,7 +2,7 @@ const syntheticTest = require("../lib/syntheticTest");
 
 describe("testHttpResponse", () => {
   describe("without a response url", () => {
-    it.only("should throw an error", () => {
+    it("should throw an error", () => {
       expect.assertions(1);
       return syntheticTest
         .testHttpResponse()
