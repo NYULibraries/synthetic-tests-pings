@@ -15,10 +15,7 @@ package:
     - handler.js
     - lib/**/*
   exclude:
-    - node_modules/**/*
-    - package.json
-    - yarn.lock
-    - Dockerfile
+    - Dockerfile*
     - docker-compose.yml
     - spec/*
     - .env
