@@ -27,30 +27,6 @@ package:
     - .circleci/*
 
 functions:
-  dev-primo:
-    handler: handler.syntheticTest
-    name: ${self:service}-dev-primo-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
-    # timeout: 5
-    events:
-      -schedule: rate(10 minutes)
-    environment:
-      TEST_URL: "https://dev.library.nyu.edu"
-      EXPECTED_CODE: 200
-      EXPECTED_RESPONSE_TIME_MS: 400
-  
-  doesnt-exist-primo:
-    handler: handler.syntheticTest
-    name: ${self:service}-primo-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
-    # timeout: 5
-    events: 
-      - schedule: rate(10 minutes)
-    environment:
-      TEST_URL: "https://library.nyu.edu/does/not/exist"
-      EXPECTED_CODE: 404
-      EXPECTED_RESPONSE_TIME_MS: 400
-  
   primo:
     handler: handler.syntheticTest
     name: ${self:service}-primo-synthetic-test-${opt:stage, 'dev'}
@@ -62,6 +38,7 @@ functions:
       TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYU"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
 
   aleph:
     handler: handler.syntheticTest
@@ -74,3 +51,4 @@ functions:
       TEST_URL: "https://aleph.library.nyu.edu"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
