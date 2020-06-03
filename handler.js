@@ -9,11 +9,13 @@ module.exports.syntheticTest = async (event, context) => {
     responseTime: process.env.EXPECTED_RESPONSE_TIME_MS,
   };
 
+  let result = await checkUrl(testVariables);
+
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: checkUrl(testVariables),
+        message: result,
         input: event,
       },
       null,
