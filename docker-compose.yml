@@ -18,7 +18,10 @@ x-default-volumes: &default-volumes
 
 x-test_env: &test-env
   environment:
-    TEST_URL: https://bobcat.library.nyu.edu
+    TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYU"
+    EXPECTED_CODE: 201
+    EXPECTED_RESPONSE_TIME_MS: 400
+    SLACK_URL:
 
 x-serverless_env: &serverless-env
   environment:
@@ -44,7 +47,7 @@ services:
       - node_modules:/var/task/node_modules
     depends_on:
       - npm_install
-  
+
   npm_install:
     <<: *serverless-build
     volumes:
