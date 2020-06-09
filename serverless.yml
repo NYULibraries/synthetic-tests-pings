@@ -37,6 +37,19 @@ functions:
       EXPECTED_RESPONSE_TIME_MS: 400
       SLACK_URL: ${env:SLACK_URL}
 
+  primo-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=NYU"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
   aleph:
     handler: handler.syntheticTest
     name: ${self:service}-aleph-synthetic-test-${opt:stage, 'dev'}
@@ -56,7 +69,7 @@ functions:
     # memorySize: 128
     # timeout: 5
     events:
-      - schedule: rate(24 hours)
+      - schedule: rate(1 hour)
     environment:
       TEST_URL: "https://library.nyu.edu/does/not/exist"
       EXPECTED_CODE: 200
