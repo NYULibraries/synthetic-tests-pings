@@ -15,10 +15,7 @@ package:
     - handler.js
     - lib/**/*
   exclude:
-    - node_modules/**/*
-    - package.json
-    - yarn.lock 
-    - Dockerfile
+    - Dockerfile*
     - docker-compose.yml
     - spec/*
     - .env
@@ -38,11 +35,24 @@ functions:
       TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYU"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=NYU"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
 
   aleph:
     handler: handler.syntheticTest
     name: ${self:service}-aleph-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
     # memorySize: 128
     # timeout: 5
     events:
@@ -51,3 +61,30 @@ functions:
       TEST_URL: "https://aleph.library.nyu.edu"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+  
+  library:
+    handler: handler.syntheticTest
+    name: ${self:service}-library-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://library.nyu.edu"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  library-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-library-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://dev.library.nyu.edu"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}

@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 x-serverless-build: &serverless-build
   build:
@@ -15,11 +15,13 @@ x-default-volumes: &default-volumes
     - ./yarn.lock:/var/task/yarn.lock
     - ./serverless.yml:/var/task/serverless.yml
     - ./jest.config.js:/var/task/jest.config.js
-    - /opt/node_modules
 
 x-test_env: &test-env
   environment:
-    TEST_URL: https://bobcat.library.nyu.edu
+    TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYU"
+    EXPECTED_CODE: 201
+    EXPECTED_RESPONSE_TIME_MS: 400
+    SLACK_URL:
 
 x-serverless_env: &serverless-env
   environment:
@@ -29,18 +31,27 @@ x-serverless_env: &serverless-env
     LAMBDA_ROLE:
     SERVERLESS_STAGE:
     AWS_REGION:
+    SLACK_URL:
   env_file:
-      - .env
+    - .env
 
 services:
   dev:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.lambda
     image: synthetic-tests-lambda
     command: ["handler.syntheticTest"]
     <<: *test-env
-    #<<: *default-volumes
+    volumes:
+      - node_modules:/var/task/node_modules
+    depends_on:
+      - npm_install
+
+  npm_install:
+    <<: *serverless-build
+    volumes:
+      - node_modules:/var/task/node_modules
 
   test:
     <<: *serverless-build
@@ -58,3 +69,6 @@ services:
     entrypoint: ["serverless", "invoke", "-f"]
     <<: *serverless-env
     <<: *default-volumes
+
+volumes:
+  node_modules:
