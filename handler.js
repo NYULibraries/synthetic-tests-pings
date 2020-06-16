@@ -5,8 +5,8 @@ const { checkUrl } = require("./lib/syntheticTest");
 module.exports.syntheticTest = async (event, context) => {
   const testVariables = {
     url: process.env.TEST_URL,
-    status: process.env.EXPECTED_CODE,
-    responseTime: process.env.EXPECTED_RESPONSE_TIME_MS,
+    expectedStatus: process.env.EXPECTED_CODE,
+    expectedResponseTime: process.env.EXPECTED_RESPONSE_TIME_MS,
   };
 
   let result = await checkUrl(testVariables);
