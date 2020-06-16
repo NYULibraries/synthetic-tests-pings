@@ -23,19 +23,19 @@ describe("formatMessage", () => {
   });
 });
 
-describe("request", () => {
+describe("postSlack", () => {
   it("should resolve the request with 200", async () => {
     const res = { status: 200 };
     axios.post.mockResolvedValue(res);
     return reporting
-      .request({})
+      .postSlack({})
       .then((data) => expect(data.status).toEqual(200));
   });
 });
 
 describe("sendMessage", () => {
   beforeEach(() => {
-    reporting.request = jest.fn();
+    reporting.postSlack = jest.fn();
   });
   it("should call request with the same parameters", async () => {
     const data = { case: "time", actual: 290, expected: 1 };
