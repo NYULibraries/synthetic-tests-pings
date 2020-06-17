@@ -16,9 +16,9 @@ describe("formatMessage", () => {
   });
 
   it("should return accurate message for status trigger", () => {
-    const testParams = { case: "status", actual: 201, expected: 200 };
+    const testParams = { case: "status", actual: 201, expected: 200, url: 'http://library.nyu.edu' };
     expect(reporting.formatMessage(testParams)).toEqual(
-      "Test failed! Unexpected status - Expected: 200, Received: 201"
+      "Testing http://library.nyu.edu. Unexpected status - Expected: 200, Received: 201"
     );
   });
 });
