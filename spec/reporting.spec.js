@@ -36,16 +36,6 @@ describe("postSlack", () => {
       .postSlack({})
       .then((data) => expect(data.status).toEqual(200));
   });
-  it("should have a timeout parameter", async () => {
-    const testParams = {
-      case: "status",
-      actual: 201,
-      expected: 200,
-      url: "http://library.nyu.edu",
-    }
-    await reporting.postSlack(testParams);
-    expect(axios.post).toHaveBeenCalledWith(undefined, {"text": "Testing http://library.nyu.edu. Unexpected status - Expected: 200, Received: 201"}, {"timeout": 1000});
-  })
 });
 
 describe("sendMessage", () => {
