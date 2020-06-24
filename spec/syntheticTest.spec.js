@@ -1,5 +1,6 @@
 const syntheticTest = require("../lib/syntheticTest");
 const reporting = require("../lib/reporting");
+const axios = require("axios");
 
 describe("testHttpResponse", () => {
   describe("without a response url", () => {
@@ -145,5 +146,17 @@ describe("checkUrl", () => {
       expectedResponseTime: 500,
     });
     expect(reporting.sendMessage).not.toHaveBeenCalled();
+  });
+});
+
+describe("httpResponse", () => {
+  beforeEach(() => {
+    axios.get = jest.fn().mockResolvedValueOnce({ status: 200 })
+  })
+  it("should resolve the requests ", async () => {
+    const testParam = "http://library.nyu.edu"
+    return syntheticTest
+    .httpResponse(testParam)
+    .then((data)=> expect(data).toEqual({"res": { status: 200 }, "time": 0}))
   });
 });
