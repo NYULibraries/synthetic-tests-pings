@@ -76,9 +76,9 @@ functions:
       EXPECTED_RESPONSE_TIME_MS: 400
       SLACK_URL: ${env:SLACK_URL}
 
-  primo:
+  primo-NYU:
     handler: handler.syntheticTest
-    name: ${self:service}-primo-synthetic-test-${opt:stage, 'dev'}
+    name: ${self:service}-primo-NYU-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
     events:
@@ -89,15 +89,171 @@ functions:
       EXPECTED_RESPONSE_TIME_MS: 400
       SLACK_URL: ${env:SLACK_URL}
 
-  primo-dev:
+  primo-NYU-dev:
     handler: handler.syntheticTest
-    name: ${self:service}-primo-dev-synthetic-test-${opt:stage, 'dev'}
+    name: ${self:service}-primo-NYU-dev-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
     events:
       - schedule: rate(10 minutes)
     environment:
       TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=NYU"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-NYUAD:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-NYUAD-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYUAD"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-NYUAD-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-NYUAD-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=NYUAD"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+      
+  primo-NYUSH:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-NYUSH-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYUSH"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-NYUSH-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-NYUSH-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=NYUSH"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+      
+  primo-NYHS:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-NYHS-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=NYHS"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-NYHS-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-NYHS-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=NYHS"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-CU:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-CU-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=CU"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-CU-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-CU-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=CU"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-BHS:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-BHS-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=BHS"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-BHS-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-BHS-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=BHS"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-HSL:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-HSL-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcat.library.nyu.edu/primo-explore/search?vid=HSL"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 400
+      SLACK_URL: ${env:SLACK_URL}
+
+  primo-HSL-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-primo-HSL-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=HSL"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 400
       SLACK_URL: ${env:SLACK_URL}
