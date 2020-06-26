@@ -50,6 +50,34 @@ functions:
       EXPECTED_RESPONSE_TIME_MS: 400
       SLACK_URL: ${env:SLACK_URL}
 
+  eshelf:
+    handler: handler.syntheticTest
+    name: ${self:service}-eshelf-stage-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://eshelf.library.nyu.edu"
+      EXPECTED_CODE: 302
+      EXPECTED_RESPONSE_TIME_MS: 400
+      EXPECTED_REDIRECT_LOCATION: "https://login.library.nyu.edu/"
+      SLACK_URL: ${env:SLACK_URL}
+
+  eshelf-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-eshelf-stage-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://eshelf-dev.library.nyu.edu"
+      EXPECTED_CODE: 302
+      EXPECTED_RESPONSE_TIME_MS: 400
+      EXPECTED_REDIRECT_LOCATION: "https://dev.login.library.nyu.edu/"
+      SLACK_URL: ${env:SLACK_URL}
+
   library:
     handler: handler.syntheticTest
     name: ${self:service}-library-synthetic-test-${opt:stage, 'dev'}
