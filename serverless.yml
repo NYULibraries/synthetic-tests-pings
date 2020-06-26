@@ -52,7 +52,7 @@ functions:
 
   eshelf:
     handler: handler.syntheticTest
-    name: ${self:service}-eshelf-stage-synthetic-test-${opt:stage, 'dev'}
+    name: ${self:service}-eshelf-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
     events:
@@ -66,7 +66,7 @@ functions:
 
   eshelf-dev:
     handler: handler.syntheticTest
-    name: ${self:service}-eshelf-stage-synthetic-test-${opt:stage, 'dev'}
+    name: ${self:service}-eshelf-dev-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
     events:
