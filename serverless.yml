@@ -315,6 +315,34 @@ functions:
       EXPECTED_RESPONSE_TIME_MS: 800
       SLACK_URL: ${env:SLACK_URL}
 
+  proxy:
+    handler: handler.syntheticTest
+    name: ${self:service}-ezproxy-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://proxy.library.nyu.edu"
+      EXPECTED_CODE: 302
+      EXPECTED_RESPONSE_TIME_MS: 600
+      EXPECTED_REDIRECT_LOCATION: "https://login.proxy.library.nyu.edu/login"
+      SLACK_URL: ${env:SLACK_URL}
+
+  proxy-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-ezproxy-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://proxy.library.nyu.edu"
+      EXPECTED_CODE: 302
+      EXPECTED_RESPONSE_TIME_MS: 600
+      EXPECTED_REDIRECT_LOCATION: "https://login.proxy.library.nyu.edu/login"
+      SLACK_URL: ${env:SLACK_URL}
+
   specialcollections:
     handler: handler.syntheticTest
     name: ${self:service}-specialcollections-synthetic-test-${opt:stage, 'dev'}
@@ -331,7 +359,7 @@ functions:
 
   specialcollections-dev:
     handler: handler.syntheticTest
-    name: ${self:service}-specialcollections-synthetic-test-${opt:stage, 'dev'}
+    name: ${self:service}-specialcollections-dev-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
     events:
