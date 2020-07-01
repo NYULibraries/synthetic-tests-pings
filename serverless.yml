@@ -78,6 +78,19 @@ functions:
       EXPECTED_REDIRECT_LOCATION: "https://dev.login.library.nyu.edu/"
       SLACK_URL: ${env:SLACK_URL}
 
+  ezborrow:
+    handler: handler.syntheticTest
+    name: ${self:service}-ezborrow-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://login.library.nyu.edu/ezborrow"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 600
+      SLACK_URL: ${env:SLACK_URL}
+
   illiad:
     handler: handler.syntheticTest
     name: ${self:service}-illiad-synthetic-test-${opt:stage, 'dev'}
