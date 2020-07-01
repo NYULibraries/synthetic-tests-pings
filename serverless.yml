@@ -87,9 +87,8 @@ functions:
       - schedule: rate(10 minutes)
     environment:
       TEST_URL: "https://ill.library.nyu.edu/illiad"
-      EXPECTED_CODE: 301
+      EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 600
-      #EXPECTED_REDIRECT_LOCATION: "https://login.library.nyu.edu/"
       SLACK_URL: ${env:SLACK_URL}
 
   illiad-dev:
@@ -101,9 +100,8 @@ functions:
       - schedule: rate(10 minutes)
     environment:
       TEST_URL: "https://dev.ill.library.nyu.edu/illiad/"
-      EXPECTED_CODE: 301
+      EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 600
-      #EXPECTED_REDIRECT_LOCATION: "https://dev.login.library.nyu.edu/"
       SLACK_URL: ${env:SLACK_URL}
 
 
@@ -341,6 +339,32 @@ functions:
       TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=HSL"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 800
+      SLACK_URL: ${env:SLACK_URL}
+
+  privileges:
+    handler: handler.syntheticTest
+    name: ${self:service}-privileges-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://privileges.library.nyu.edu"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 500
+      SLACK_URL: ${env:SLACK_URL}
+
+  privileges-dev:
+    handler: handler.syntheticTest
+    name: ${self:service}-privileges-dev-synthetic-test-${opt:stage, 'dev'}
+    # memorySize: 128
+    # timeout: 5
+    events:
+      - schedule: rate(10 minutes)
+    environment:
+      TEST_URL: "https://dev.privileges.library.nyu.edu"
+      EXPECTED_CODE: 200
+      EXPECTED_RESPONSE_TIME_MS: 500
       SLACK_URL: ${env:SLACK_URL}
 
   proxy:
