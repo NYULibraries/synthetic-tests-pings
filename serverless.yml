@@ -85,6 +85,9 @@ functions:
     # timeout: 5
     events:
       - schedule: rate(10 minutes)
+      - http:
+          method: post
+          path: "synthetic-test/library"
     environment:
       TEST_URL: "https://library.nyu.edu"
       EXPECTED_CODE: 200
@@ -98,6 +101,9 @@ functions:
     # timeout: 5
     events:
       - schedule: rate(10 minutes)
+      - http:
+          method: post
+          path: "synthetic-test/library-dev"
     environment:
       TEST_URL: "https://dev.library.nyu.edu"
       EXPECTED_CODE: 200
