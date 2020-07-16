@@ -16,8 +16,9 @@ module.exports.syntheticTest = async (event, context) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: result,
-        input: event,
+        message: result.message,
+        success: result.success,
+        time: Date.now(),
       },
       null,
       2
