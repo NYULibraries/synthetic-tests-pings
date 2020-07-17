@@ -151,12 +151,12 @@ describe("checkUrl", () => {
 
 describe("httpResponse", () => {
   beforeEach(() => {
-    axios.get = jest.fn().mockResolvedValueOnce({ status: 200 })
-  })
+    axios.get = jest.fn().mockResolvedValueOnce({ status: 200 });
+  });
   it("should resolve the requests ", async () => {
-    const testParam = "http://library.nyu.edu"
+    const testParam = "http://library.nyu.edu";
     return syntheticTest
-    .httpResponse(testParam)
-    .then((data)=> expect(data).toEqual({"res": { status: 200 }, "time": 0}))
+      .httpResponse(testParam)
+      .then((data) => expect(data).toEqual({ res: { status: 200 } }));
   });
 });
