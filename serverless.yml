@@ -125,7 +125,7 @@ functions:
     events:
       - schedule: rate(10 minutes)
       - http:
-          method: post
+          method: get
           path: "synthetic-test/library"
     environment:
       TEST_URL: "https://library.nyu.edu"
@@ -141,7 +141,7 @@ functions:
     events:
       - schedule: rate(10 minutes)
       - http:
-          method: post
+          method: get
           path: "synthetic-test/library-dev"
     environment:
       TEST_URL: "https://dev.library.nyu.edu"
@@ -357,32 +357,6 @@ functions:
       TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=HSL"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 800
-      SLACK_URL: ${env:SLACK_URL}
-
-  privileges:
-    handler: handler.syntheticTest
-    name: ${self:service}-privileges-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
-    # timeout: 5
-    events:
-      - schedule: rate(10 minutes)
-    environment:
-      TEST_URL: "https://privileges.library.nyu.edu"
-      EXPECTED_CODE: 200
-      EXPECTED_RESPONSE_TIME_MS: 900
-      SLACK_URL: ${env:SLACK_URL}
-
-  privileges-dev:
-    handler: handler.syntheticTest
-    name: ${self:service}-privileges-dev-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
-    # timeout: 5
-    events:
-      - schedule: rate(10 minutes)
-    environment:
-      TEST_URL: "https://dev.privileges.library.nyu.edu"
-      EXPECTED_CODE: 200
-      EXPECTED_RESPONSE_TIME_MS: 900
       SLACK_URL: ${env:SLACK_URL}
 
   proxy:
