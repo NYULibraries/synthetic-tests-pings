@@ -117,7 +117,6 @@ functions:
       EXPECTED_RESPONSE_TIME_MS: 600
       SLACK_URL: ${env:SLACK_URL}
 
-
   library:
     handler: handler.syntheticTest
     name: ${self:service}-library-synthetic-test-${opt:stage, 'dev'}
@@ -163,7 +162,7 @@ functions:
     name: ${self:service}-marli-dev-synthetic-test-${opt:stage, 'dev'}
     # memorySize: 128
     # timeout: 5
-    events: 
+    events:
       - schedule: rate(10 minutes)
     environment:
       TEST_URL: "https://marli-dev.library.nyu.edu"
@@ -223,7 +222,7 @@ functions:
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 800
       SLACK_URL: ${env:SLACK_URL}
-      
+
   primo-NYUSH:
     handler: handler.syntheticTest
     name: ${self:service}-primo-NYUSH-synthetic-test-${opt:stage, 'dev'}
@@ -249,7 +248,7 @@ functions:
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 800
       SLACK_URL: ${env:SLACK_URL}
-      
+
   primo-NYHS:
     handler: handler.syntheticTest
     name: ${self:service}-primo-NYHS-synthetic-test-${opt:stage, 'dev'}
@@ -352,32 +351,6 @@ functions:
       TEST_URL: "https://bobcatdev.library.nyu.edu/primo-explore/search?vid=HSL"
       EXPECTED_CODE: 200
       EXPECTED_RESPONSE_TIME_MS: 800
-      SLACK_URL: ${env:SLACK_URL}
-
-  privileges:
-    handler: handler.syntheticTest
-    name: ${self:service}-privileges-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
-    # timeout: 5
-    events:
-      - schedule: rate(10 minutes)
-    environment:
-      TEST_URL: "https://privileges.library.nyu.edu"
-      EXPECTED_CODE: 200
-      EXPECTED_RESPONSE_TIME_MS: 900
-      SLACK_URL: ${env:SLACK_URL}
-
-  privileges-dev:
-    handler: handler.syntheticTest
-    name: ${self:service}-privileges-dev-synthetic-test-${opt:stage, 'dev'}
-    # memorySize: 128
-    # timeout: 5
-    events:
-      - schedule: rate(10 minutes)
-    environment:
-      TEST_URL: "https://dev.privileges.library.nyu.edu"
-      EXPECTED_CODE: 200
-      EXPECTED_RESPONSE_TIME_MS: 900
       SLACK_URL: ${env:SLACK_URL}
 
   proxy:
