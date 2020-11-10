@@ -8,6 +8,7 @@ module.exports.syntheticTest = async (event, context) => {
     expectedStatus: process.env.EXPECTED_CODE,
     expectedResponseTime: process.env.EXPECTED_RESPONSE_TIME_MS,
     expectedRedirectLocation: process.env.EXPECTED_REDIRECT_LOCATION,
+    app: process.env.APP
   };
 
   let result = await checkUrl(testVariables);
