@@ -1,5 +1,7 @@
 "use strict";
 
+require('dotenv').config()
+
 const { checkUrl } = require("./lib/syntheticTest");
 
 module.exports.syntheticTest = async (event, context) => {
