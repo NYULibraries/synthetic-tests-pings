@@ -32,6 +32,9 @@ x-serverless_env: &serverless-env
     SERVERLESS_STAGE:
     AWS_REGION:
     SLACK_URL:
+    PROM_URL:
+    HTTP_AUTH_USER:
+    HTTP_AUTH_PASSWORD:
   env_file:
     - .env
 
