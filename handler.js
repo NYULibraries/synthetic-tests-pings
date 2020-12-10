@@ -3,6 +3,7 @@ require('dotenv').config()
 const { checkUrl, pushToProm } = require("./lib/syntheticTest");
 
 module.exports.syntheticTest = async (event, context) => {
+  console.log("Handler console.log")
   const appName = process.env.APP ? process.env.APP : "appNameNotProvided"
 
   const testVariables = {

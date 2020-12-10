@@ -429,7 +429,7 @@ functions:
     # memorySize: 128
     # timeout: 5
     events:
-      - schedule: rate(10 minutes)
+      - schedule: rate(1 minute)
     environment:
       APP: specialcollections-dev
       TEST_URL: "https://specialcollections-dev.library.nyu.edu/"
