@@ -28,7 +28,8 @@ jobs:
     <<: *docker-defaults
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+        version: 19.03.13
       - *docker_build
       - *test
       - *run_handler
