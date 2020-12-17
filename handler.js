@@ -1,6 +1,7 @@
 "use strict";
 require('dotenv').config()
-const { checkUrl, pushToProm } = require("./lib/syntheticTest");
+const { checkUrl } = require("./lib/syntheticTest");
+const { pushToProm } = require("./lib/reporting")
 
 module.exports.syntheticTest = async (event, context) => {
   const appName = process.env.PROMETHEUS_APP ? process.env.PROMETHEUS_APP : "appNameNotProvided"
