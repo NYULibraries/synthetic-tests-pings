@@ -23,6 +23,10 @@ SERVERLESS_STAGE
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_REGION
+SLACK_URL
+PROM_URL
+HTTP_AUTH_USER
+HTTP_AUTH_PASSWORD
 ```
 
 The `LAMBDA_ROLE` should be the ARN of an AWS IAM role with permissions defined by the `AWSLambdaBasicExecutionRole` policy. The `S3_BUCKET` should be the name of an AWS S3 bucket for deploying the lambda code. Keep in mind that S3 bucket names must be unique _across all accounts_, so for testing, you may want to use a name with an appended random hash.

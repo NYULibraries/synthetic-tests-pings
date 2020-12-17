@@ -131,7 +131,7 @@ describe("checkUrl", () => {
   });
 
   it("should call sendMessage when testHttpResponse returns false", async () => {
-    const test = await syntheticTest.checkUrl({
+    await syntheticTest.checkUrl({
       url: "https://www.google.com",
       expectedStatus: 201,
       expectedResponseTime: 1,
@@ -140,7 +140,7 @@ describe("checkUrl", () => {
   });
 
   it("should not call sendMessage when testHttpResponse returns true", async () => {
-    const test = await syntheticTest.checkUrl({
+    await syntheticTest.checkUrl({
       url: "https://www.example.com",
       expectedStatus: 200,
       expectedResponseTime: 500,
