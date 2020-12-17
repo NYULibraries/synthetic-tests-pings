@@ -1,5 +1,7 @@
 "use strict";
+
 require('dotenv').config()
+
 const { checkUrl } = require("./lib/syntheticTest");
 const { pushToProm } = require("./lib/reporting")
 
