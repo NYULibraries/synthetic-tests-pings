@@ -431,7 +431,7 @@ functions:
     events:
       - schedule: rate(1 minute)
     environment:
-      APP: specialcollections-dev
+      PROMETHEUS_APP: specialcollections-dev
       TEST_URL: "https://specialcollections-dev.library.nyu.edu/"
       EXPECTED_CODE: 301
       EXPECTED_RESPONSE_TIME_MS: 600

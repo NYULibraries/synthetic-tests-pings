@@ -3,8 +3,7 @@ require('dotenv').config()
 const { checkUrl, pushToProm } = require("./lib/syntheticTest");
 
 module.exports.syntheticTest = async (event, context) => {
-  console.log("Handler console.log")
-  const appName = process.env.APP ? process.env.APP : "appNameNotProvided"
+  const appName = process.env.PROMETHEUS_APP ? process.env.PROMETHEUS_APP : "appNameNotProvided"
 
   const testVariables = {
     url: process.env.TEST_URL,

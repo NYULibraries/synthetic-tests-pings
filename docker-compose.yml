@@ -21,7 +21,7 @@ x-test_env: &test-env
     TEST_URL: "https://bobcat.library.nyu.edu/this/is/a/test/please/ignore"
     EXPECTED_CODE: 404
     EXPECTED_RESPONSE_TIME_MS: 400
-    APP: specialcollections-dev
+    PROMETHEUS_APP: specialcollections-dev
     SLACK_URL:
 
 x-serverless_env: &serverless-env
