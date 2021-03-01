@@ -6,6 +6,12 @@ x-serverless-build: &serverless-build
     dockerfile: Dockerfile.node
   image: synthetic-tests-node
 
+x-e2e-build: &e2e-build
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: synthetic-tests-e2e
+
 x-default-volumes: &default-volumes
   volumes:
     - ./lib:/var/task/lib
@@ -58,6 +64,10 @@ services:
     command: ["yarn", "test"]
     <<: *test-env
     #<<: *default-volumes
+
+  e2e:
+    <<: *e2e-build
+    command: ["yarn", "cypress", "run", "--headless"]
 
   deploy:
     <<: *serverless-build
