@@ -19,7 +19,7 @@ x-default-volumes: &default-volumes
 x-test_env: &test-env
   environment:
     TEST_URL: "https://bobcat.library.nyu.edu/this/is/a/test/please/ignore"
-    EXPECTED_CODE: 404
+    EXPECTED_CODE: 502
     EXPECTED_RESPONSE_TIME_MS: 400
     SLACK_URL:
 
