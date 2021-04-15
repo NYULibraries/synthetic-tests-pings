@@ -1,4 +1,4 @@
-# Synthetic Tests
+# Synthetic Tests Pings
 
 Runs a series of AWS Lambda synthetic tests against NYU Libraries Web Services applications and vendor applications.
 
