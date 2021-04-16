@@ -55,6 +55,6 @@ docker-compose run dev
 
 - Deploy via CircleCI - see [other serverless functions](https://github.com/NYULibraries/bobcat-linker/blob/master/.circleci/config.yml) for example
 - Create badges for [coverage](https://www.npmjs.com/package/jest-coverage-badges) and CI in this README
-- ~~Include functionality tests using [WebDriver IO](https://webdriver.io/), or the like~~ [Split out in separate repos](https://github.com/NYULibraries/synthetic-tests-e2e)
+- ~~Include functionality tests using [WebDriver IO](https://webdriver.io/), or the like~~ [Done in its own repo: synthetic-tests-e2e](https://github.com/NYULibraries/synthetic-tests-e2e)
 - Prettifying of messages in Slack
 - Update this README to reflect the actualy usage and functionality.
