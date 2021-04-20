@@ -22,7 +22,39 @@ run_handler: &run_handler
     command: |
       docker-compose run dev handler.syntheticTest
 
+s3_deploy: &s3_deploy
+  aws-s3/sync:
+    from: dist
+    to: 's3://${TF_VAR_lambda_s3_bucket}/{FUNCTION_NAME}/${CIRCLE_SHA1}'
+    arguments: |
+      --exclude "*" \
+      --include "{FUNCTION_NAME}.zip" \
+      --delete
+    overwrite: true
+
+zip: &zip
+  run:
+    name: Zip Lambda files
+    command: docker-compose run build_lambda
+
+get_lambda_zip: &get_lambda_zip
+  run:
+    name: Retrieve zipped lambda from container
+    command: |
+      docker cp $(docker ps -aq --filter 'label=nyulibraries.app={FUNCTION_NAME}'):/app/dist .
+
+terraform_deploy: &terraform_deploy
+  run:
+    name: Deploy the Lambda to AWS via Terraform
+    command: |
+      apk add gettext
+      export TF_VAR_lambda_version=${CIRCLE_SHA1}
+      export TF_VAR_environment_variables=$(envsubst < .tf_env_vars)
+      docker-compose run terraform_deploy
+
 version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.11
 jobs:
   build:
     <<: *docker-defaults
@@ -33,3 +65,43 @@ jobs:
       - *docker_build
       - *test
       - *run_handler
+  
+  build-lambda:
+    <<: *docker-defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - <<: *build_docker
+      - <<: *zip
+      - <<: *get_lambda_zip
+      - <<: *s3_deploy
+  
+  deploy-lambda:
+    <<: *docker-defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - <<: *auth_quay
+      - <<: *terraform_deploy
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - test
+      - build-lambda:
+          context: web-lambdas-api-gateway-dev
+          filters:
+            branches:
+              ignore: master
+          requires:
+            - test
+      - deploy-lambda:
+          context: web-lambdas-api-gateway-dev
+          filters:
+            branches:
+              ignore: master
+          requires:
+            - build-lambda
