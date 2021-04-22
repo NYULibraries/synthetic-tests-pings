@@ -1,0 +1,62 @@
+version: "3.7"
+
+x-environment: &x-environment
+  BACKEND_BUCKET: 
+  BACKEND_REGION: 
+  BACKEND_DYNAMODB_TABLE: 
+  AWS_ACCESS_KEY_ID: 
+  AWS_SECRET_ACCESS_KEY: 
+  AWS_DEFAULT_REGION: 
+  TF_VAR_lambda_exec_arn: 
+  TF_VAR_apigw_id: 
+  TF_VAR_apigw_root_resource_id: 
+  TF_VAR_apigw_execution_arn: 
+  TF_VAR_lambda_s3_bucket: 
+  TF_VAR_aws_username: 
+  TF_VAR_apigw_stage:
+  TF_VAR_lambda_version:
+  TF_VAR_environment_variables:
+
+services:
+
+  fn_create_specialcollections:
+    build:
+      context: deploy/
+    command: ["terraform", "apply", "-auto-approve"]
+    environment:
+      <<: *x-environment
+      BACKEND_KEY: lambdas/tf_state/synthetic_tests/specialcollections
+      TF_VAR_lambda_function_name: synthetic-tests-specialcollections
+      TF_VAR_lambda_description: "Ping test for Special Collections"
+      TF_VAR_lambda_handler: handler.syntheticTest
+      TF_VAR_lambda_runtime: nodejs10.x
+      TF_VAR_lambda_method: GET
+      TF_VAR_lambda_memory_limit: 128
+      TF_VAR_schedule_expression: rate(10 minutes)
+
+  fn_destroy_specialcollections:
+    build:
+      context: deploy/
+    command: ["terraform", "destroy", "-auto-approve"]
+    environment:
+      <<: *x-environment
+      BACKEND_KEY: lambdas/tf_state/synthetic_tests/specialcollections
+      TF_VAR_lambda_function_name: synthetic-tests-specialcollections
+      TF_VAR_lambda_description: "Ping test for Special Collections"
+      TF_VAR_lambda_handler: handler.syntheticTest
+      TF_VAR_lambda_runtime: nodejs10.x
+      TF_VAR_lambda_method: GET
+      TF_VAR_lambda_memory_limit: 128
+      TF_VAR_schedule_expression: rate(10 minutes)
+      TEST_URL: "https://specialcollections.library.nyu.edu/"
+
+  build_lambda:
+    image: synthetic-tests-specialcollections-build
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        production: "true"
+    command: sh -c 'mkdir dist; cat .lambdafiles | xargs zip -r -9 -q ./dist/synthetic-tests-specialcollections.zip'
+    labels:
+      - 'nyulibraries.app=synthetic-tests-specialcollections'
