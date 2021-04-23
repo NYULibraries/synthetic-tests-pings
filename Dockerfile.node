@@ -1,5 +1,7 @@
 FROM node:12-alpine
 
+RUN apk --update --no-cache add zip
+
 ENV INSTALL_PATH /var/task
 
 WORKDIR $INSTALL_PATH
