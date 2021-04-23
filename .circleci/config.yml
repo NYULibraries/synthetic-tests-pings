@@ -72,7 +72,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-      - <<: *build_docker
+      - <<: *docker_build
       - <<: *zip
       - <<: *get_lambda_zip
       - <<: *s3_deploy
