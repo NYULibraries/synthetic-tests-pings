@@ -66,7 +66,7 @@ jobs:
       - *test
       - *run_handler
   
-  build-lambda:
+  build_lambda:
     <<: *docker-defaults
     steps:
       - checkout
@@ -90,7 +90,7 @@ workflows:
   build-test-and-deploy:
     jobs:
       - build
-      - build-lambda:
+      - build_lambda:
           context: web-lambdas-api-gateway-dev
           filters:
             branches:
@@ -103,4 +103,4 @@ workflows:
             branches:
               ignore: master
           requires:
-            - build-lambda
+            - build_lambda
