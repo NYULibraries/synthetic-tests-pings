@@ -4,9 +4,9 @@ x-environment: &x-environment
   BACKEND_BUCKET: 
   BACKEND_REGION: 
   BACKEND_DYNAMODB_TABLE: 
-  # AWS_ACCESS_KEY_ID: 
-  # AWS_SECRET_ACCESS_KEY: 
-  # AWS_DEFAULT_REGION: 
+  AWS_ACCESS_KEY_ID: 
+  AWS_SECRET_ACCESS_KEY: 
+  AWS_DEFAULT_REGION: 
   SLACK_URL:
   TF_VAR_lambda_exec_arn: 
   TF_VAR_apigw_id: 
