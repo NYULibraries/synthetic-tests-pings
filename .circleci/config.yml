@@ -89,14 +89,14 @@ workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - test
+      - build
       - build-lambda:
           context: web-lambdas-api-gateway-dev
           filters:
             branches:
               ignore: master
           requires:
-            - test
+            - build
       - deploy-lambda:
           context: web-lambdas-api-gateway-dev
           filters:
