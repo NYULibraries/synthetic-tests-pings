@@ -35,7 +35,7 @@ s3_deploy: &s3_deploy
 zip: &zip
   run:
     name: Zip Lambda files
-    command: docker-compose run build_lambda
+    command: docker-compose -f docker-compose.deploy.yml run build_lambda
 
 get_lambda_zip: &get_lambda_zip
   run:
@@ -56,7 +56,7 @@ version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@1.0.11
 jobs:
-  build:
+  test:
     <<: *docker-defaults
     steps:
       - checkout
@@ -89,14 +89,14 @@ workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - build
+      - test
       - build_lambda:
           context: web-lambdas-api-gateway-dev
           filters:
             branches:
               ignore: master
           requires:
-            - build
+            - test
       - deploy-lambda:
           context: web-lambdas-api-gateway-dev
           filters:
