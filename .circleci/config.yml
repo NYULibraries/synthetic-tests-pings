@@ -25,10 +25,10 @@ run_handler: &run_handler
 s3_deploy: &s3_deploy
   aws-s3/sync:
     from: dist
-    to: 's3://${TF_VAR_lambda_s3_bucket}/{FUNCTION_NAME}/${CIRCLE_SHA1}'
+    to: 's3://${TF_VAR_lambda_s3_bucket}/synthetic-tests-specialcollections/${CIRCLE_SHA1}'
     arguments: |
       --exclude "*" \
-      --include "{FUNCTION_NAME}.zip" \
+      --include "synthetic-tests-specialcollections.zip" \
       --delete
     overwrite: true
 
@@ -41,7 +41,7 @@ get_lambda_zip: &get_lambda_zip
   run:
     name: Retrieve zipped lambda from container
     command: |
-      docker cp $(docker ps -aq --filter 'label=nyulibraries.app={FUNCTION_NAME}'):/app/dist .
+      docker cp $(docker ps -aq --filter 'label=nyulibraries.app=synthetic-tests-specialcollections'):/app/dist .
 
 terraform_deploy: &terraform_deploy
   run:
