@@ -48,7 +48,7 @@ get_lambda_zip: &get_lambda_zip
   run:
     name: Retrieve zipped lambda from container
     command: |
-      docker cp $(docker ps -aq --filter 'label=nyulibraries.app=synthetic-tests-specialcollections'):/app/dist .
+      docker cp $(docker ps -aq --filter 'label=nyulibraries.app=synthetic-tests-specialcollections'):/var/task/dist .
 
 terraform_deploy: &terraform_deploy
   run:
