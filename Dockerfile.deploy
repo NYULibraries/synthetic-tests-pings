@@ -1,0 +1,8 @@
+FROM quay.io/nyulibraries/web-lambdas-terraform:master
+
+RUN apk add gettext
+
+COPY scripts/ ./
+COPY config.yml .
+COPY .tf_env_vars .
+RUN chmod a+x ./scripts/*

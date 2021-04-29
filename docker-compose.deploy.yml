@@ -19,43 +19,24 @@ x-environment: &x-environment
   TF_VAR_environment_variables:
 
 services:
-  fn_create_specialcollections:
-    build:
-      context: deploy/
-    command: ["terraform", "apply", "-auto-approve"]
-    environment:
-      <<: *x-environment
-      BACKEND_KEY: lambdas/tf_state/synthetic_tests/specialcollections
-      TF_VAR_lambda_function_name: synthetic-tests-specialcollections
-      TF_VAR_lambda_description: "Ping test for Special Collections"
-      TF_VAR_lambda_handler: handler.syntheticTest
-      TF_VAR_lambda_runtime: nodejs10.x
-      TF_VAR_lambda_method: GET
-      TF_VAR_lambda_memory_limit: 128
-      TF_VAR_schedule_expression: rate(10 minutes)
-      TEST_URL: "https://specialcollections.library.nyu.edu/"
-      EXPECTED_CODE: 301
-      EXPECTED_RESPONSE_TIME_MS: 600
-      EXPECTED_REDIRECT_LOCATION: "http://specialcollections.library.nyu.edu/search"
 
-  fn_destroy_specialcollections:
+  fn_create:
+    image: synthetic-tests-pings-create
     build:
-      context: deploy/
-    command: ["terraform", "destroy", "-auto-approve"]
-    environment:
-      <<: *x-environment
-      BACKEND_KEY: lambdas/tf_state/synthetic_tests/specialcollections
-      TF_VAR_lambda_function_name: synthetic-tests-specialcollections
-      TF_VAR_lambda_description: "Ping test for Special Collections"
-      TF_VAR_lambda_handler: handler.syntheticTest
-      TF_VAR_lambda_runtime: nodejs10.x
-      TF_VAR_lambda_method: GET
-      TF_VAR_lambda_memory_limit: 128
-      TF_VAR_schedule_expression: rate(10 minutes)
-      TEST_URL: "https://specialcollections.library.nyu.edu/"
-      EXPECTED_CODE: 301
-      EXPECTED_RESPONSE_TIME_MS: 600
-      EXPECTED_REDIRECT_LOCATION: "http://specialcollections.library.nyu.edu/search"
+      context: .
+      dockerfile: Dockerfile.deploy
+    <<: *x-environment
+    # env_file: dev.env
+    entrypoint: ["./create.sh"]
+  
+  fn_destroy:
+    image: synthetic-tests-pings-destroy
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+    <<: *x-environment
+    # env_file: dev.env
+    entrypoint: ["./destroy.sh"]
 
   build_lambda:
     image: synthetic-tests-specialcollections-build
