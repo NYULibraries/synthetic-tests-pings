@@ -7,14 +7,12 @@ docker_build: &docker_build
   run:
     name: Docker build
     command: |
-      touch .env
       docker-compose build test dev
 
 docker_deploy_build: &docker_deploy_build
   run:
     name: Docker deploy build
     command: |
-      touch .env
       docker-compose -f docker-compose.yml build
 
 test: &test
