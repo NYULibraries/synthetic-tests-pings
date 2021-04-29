@@ -1,10 +1,10 @@
 version: "3.7"
 
-x-serverless-build: &serverless-build
+x-node-build: &node-build
   build:
     context: .
     dockerfile: Dockerfile.node
-  image: synthetic-tests-node
+  image: synthetic-tests-pings-node
 
 x-default-volumes: &default-volumes
   volumes:
@@ -23,24 +23,12 @@ x-test_env: &test-env
     EXPECTED_RESPONSE_TIME_MS: 400
     SLACK_URL:
 
-x-serverless_env: &serverless-env
-  environment:
-    AWS_ACCESS_KEY_ID:
-    AWS_SECRET_ACCESS_KEY:
-    S3_BUCKET:
-    LAMBDA_ROLE:
-    SERVERLESS_STAGE:
-    AWS_REGION:
-    SLACK_URL:
-  env_file:
-    - .env
-
 services:
   dev:
     build:
       context: .
       dockerfile: Dockerfile.lambda
-    image: synthetic-tests-lambda
+    image: synthetic-tests-pings-lambda
     command: ["handler.syntheticTest"]
     <<: *test-env
     volumes:
@@ -49,26 +37,15 @@ services:
       - npm_install
 
   npm_install:
-    <<: *serverless-build
+    <<: *node-build
     volumes:
       - node_modules:/var/task/node_modules
 
   test:
-    <<: *serverless-build
+    <<: *node-build
     command: ["yarn", "test"]
     <<: *test-env
     #<<: *default-volumes
-
-  deploy:
-    <<: *serverless-build
-    <<: *serverless-env
-    <<: *default-volumes
-
-  invoke:
-    <<: *serverless-build
-    entrypoint: ["serverless", "invoke", "-f"]
-    <<: *serverless-env
-    <<: *default-volumes
 
 volumes:
   node_modules:
