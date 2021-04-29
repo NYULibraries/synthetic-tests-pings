@@ -25,7 +25,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.deploy
-    <<: *x-environment
+    environment:
+      <<: *x-environment
     # env_file: dev.env
     entrypoint: ["./create.sh"]
   
@@ -34,7 +35,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.deploy
-    <<: *x-environment
+    environment:
+      <<: *x-environment
     # env_file: dev.env
     entrypoint: ["./destroy.sh"]
 
