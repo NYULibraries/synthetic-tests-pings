@@ -11,3 +11,7 @@ specialcollections:
   EXPECTED_CODE: 301
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "http://specialcollections.library.nyu.edu/search"
+
+getit:
+
+bobcat:

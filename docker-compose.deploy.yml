@@ -9,12 +9,8 @@ x-environment: &x-environment
   AWS_DEFAULT_REGION: 
   SLACK_URL:
   TF_VAR_lambda_exec_arn: 
-  TF_VAR_apigw_id: 
-  TF_VAR_apigw_root_resource_id: 
-  TF_VAR_apigw_execution_arn: 
   TF_VAR_lambda_s3_bucket: 
   TF_VAR_aws_username: 
-  TF_VAR_apigw_stage:
   TF_VAR_lambda_version:
   TF_VAR_environment_variables:
 
@@ -28,7 +24,8 @@ services:
     environment:
       <<: *x-environment
     # env_file: dev.env
-    entrypoint: ["./create.sh"]
+    # entrypoint: ["./create.sh"]
+    entrypoint: ["/bin/sh"]
   
   fn_destroy:
     image: synthetic-tests-pings-destroy
@@ -41,12 +38,12 @@ services:
     entrypoint: ["./destroy.sh"]
 
   build_lambda:
-    image: synthetic-tests-specialcollections-build
+    image: synthetic-tests-pings-build
     build: 
       context: .
       dockerfile: Dockerfile.node
       args:
         production: "true"
-    command: sh -c 'mkdir dist; cat .lambdafiles | xargs zip -r -9 -q ./dist/synthetic-tests-specialcollections.zip'
+    command: sh -c 'mkdir dist; cat .lambdafiles | xargs zip -r -9 -q ./dist/synthetic-tests-pings.zip'
     labels:
-      - 'nyulibraries.app=synthetic-tests-specialcollections'
+      - 'nyulibraries.app=synthetic-tests-pings'

@@ -1,6 +1,6 @@
 FROM quay.io/nyulibraries/web-lambdas-terraform:master
 
-RUN apk add gettext
+RUN apk add gettext 
 
 COPY scripts/ ./
 COPY config.yml .
