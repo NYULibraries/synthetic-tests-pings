@@ -1,12 +1,5 @@
 FROM quay.io/nyulibraries/web-lambdas-terraform:feature_lambda_tagging
 
-# Get the latest yq v4 from the edge mirror per https://mikefarah.gitbook.io/yq/#alpine-linux
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+COPY .tf_env_vars deploy.yml ./
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache gettext yq~=4
 
-COPY .tf_env_vars deploy.yml scripts/ ./
-
-RUN chmod a+x ./*.sh
