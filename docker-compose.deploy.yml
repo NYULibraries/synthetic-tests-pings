@@ -24,8 +24,8 @@ services:
     environment:
       <<: *x-environment
     # env_file: dev.env
-    # entrypoint: ["./create.sh"]
-    entrypoint: ["/bin/sh"]
+    entrypoint: ["./create.sh"]
+    # entrypoint: ["/bin/sh"]
   
   fn_destroy:
     image: synthetic-tests-pings-destroy

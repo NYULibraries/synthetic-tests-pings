@@ -4,17 +4,17 @@ set -e
 
 if [[ ! -z $1 ]]
 then
-# . set_env.sh $1
-# . init_tf_backend.sh
-# terraform apply -auto-approve
-  echo 'test'
+  echo "Creating Lambda infrastructure for $1..."
+  . set_env.sh $1
+  . init_tf_backend.sh
+  terraform apply -auto-approve
 else
-  for test in $(yq -M eval '. | keys' config.yml | sed -e 's/^- //' -e 's/-$//')
+  for app in $(yq -M eval '. | keys' config.yml | sed -e 's/^- //' -e 's/-$//')
   do
-    echo $test
+    echo "Creating Lambda infrastructure for $app..."
+    . set_env.sh $app
+    . init_tf_backend.sh
+    terraform apply -auto-approve
   done
-# . set_env.sh $1
-# . init_tf_backend.sh
-# terraform apply -auto-approve
 fi
 

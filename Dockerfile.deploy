@@ -1,8 +1,12 @@
-FROM quay.io/nyulibraries/web-lambdas-terraform:master
+FROM quay.io/nyulibraries/web-lambdas-terraform:v0.15.0-0
 
-RUN apk add gettext 
+# Get the latest yq v4 from the edge mirror per https://mikefarah.gitbook.io/yq/#alpine-linux
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 
-COPY scripts/ ./
-COPY config.yml .
-COPY .tf_env_vars .
-RUN chmod a+x ./scripts/*
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache gettext yq~=4
+
+COPY .tf_env_vars config.yml scripts/ ./
+
+RUN chmod a+x ./*.sh
