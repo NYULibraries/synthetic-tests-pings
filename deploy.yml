@@ -1,5 +1,5 @@
 specialcollections:
-  BACKEND_KEY: lambdas/tf_state/synthetic_tests/specialcollections
+  BACKEND_KEY: lambdas/tf_state/synthetic_tests_specialcollections
   TF_VAR_lambda_function_name: synthetic-tests-specialcollections
   TF_VAR_lambda_description: "Ping test for Special Collections"
   TF_VAR_lambda_handler: handler.syntheticTest
