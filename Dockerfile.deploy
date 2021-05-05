@@ -7,6 +7,6 @@ RUN apk update && \
     apk upgrade && \
     apk add --no-cache gettext yq~=4
 
-COPY .tf_env_vars config.yml scripts/ ./
+COPY .tf_env_vars deploy.yml scripts/ ./
 
 RUN chmod a+x ./*.sh

@@ -9,7 +9,7 @@ then
   . init_tf_backend.sh
   terraform apply -auto-approve
 else
-  for app in $(yq -M eval '. | keys' config.yml | sed -e 's/^- //' -e 's/-$//')
+  for app in $(yq -M eval '. | keys' deploy.yml | sed -e 's/^- //' -e 's/-$//')
   do
     echo "Creating Lambda infrastructure for $app..."
     . set_env.sh $app
