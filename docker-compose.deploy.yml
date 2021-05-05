@@ -13,6 +13,7 @@ x-environment: &x-environment
   TF_VAR_aws_username: 
   TF_VAR_lambda_version:
   TF_VAR_environment_variables:
+  TF_VAR_lambda_parent_function_name: synthetic-tests-pings
 
 services:
 
@@ -25,7 +26,6 @@ services:
       <<: *x-environment
     # env_file: dev.env
     entrypoint: ["./create.sh"]
-    # entrypoint: ["/bin/sh"]
   
   fn_destroy:
     image: synthetic-tests-pings-destroy
