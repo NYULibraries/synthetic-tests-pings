@@ -2,6 +2,11 @@
 
 set -e
 
+if [[ ! -f deploy.yml ]] ; then
+    echo 'File is missing: deploy.yml. Exiting...'
+    exit
+fi
+
 if [[ ! -z $1 ]]
 then
   echo "Destroying Lambda infrastructure for $1..."
