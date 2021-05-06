@@ -1,5 +1,3 @@
 FROM quay.io/nyulibraries/web-lambdas-terraform:feature_lambda_tagging
 
 COPY .tf_env_vars deploy.yml ./
-
-
