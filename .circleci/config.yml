@@ -7,8 +7,13 @@ docker_build: &docker_build
   run:
     name: Docker build
     command: |
-      touch .env
       docker-compose build test dev
+
+docker_deploy_build: &docker_deploy_build
+  run:
+    name: Docker deploy build
+    command: |
+      docker-compose -f docker-compose.deploy.yml build
 
 test: &test
   run:
@@ -22,9 +27,39 @@ run_handler: &run_handler
     command: |
       docker-compose run dev handler.syntheticTest
 
+s3_deploy: &s3_deploy
+  aws-s3/sync:
+    from: dist
+    to: 's3://${TF_VAR_lambda_s3_bucket}/synthetic-tests-pings/${CIRCLE_SHA1}'
+    arguments: |
+      --exclude "*" \
+      --include "synthetic-tests-pings.zip" \
+      --delete
+    overwrite: true
+
+zip: &zip
+  run:
+    name: Zip Lambda files
+    command: docker-compose -f docker-compose.deploy.yml run build_lambda
+
+get_lambda_zip: &get_lambda_zip
+  run:
+    name: Retrieve zipped lambda from container
+    command: |
+      docker cp $(docker ps -aq --filter 'label=nyulibraries.app=synthetic-tests-pings'):/var/task/dist .
+
+terraform_deploy: &terraform_deploy
+  run:
+    name: Deploy the Lambda to AWS via Terraform
+    command: |
+      export TF_VAR_lambda_version=${CIRCLE_SHA1}
+      docker-compose -f docker-compose.deploy.yml run fn_create
+
 version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.11
 jobs:
-  build:
+  test:
     <<: *docker-defaults
     steps:
       - checkout
@@ -33,3 +68,43 @@ jobs:
       - *docker_build
       - *test
       - *run_handler
+  
+  build_lambda:
+    <<: *docker-defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - <<: *docker_deploy_build
+      - <<: *zip
+      - <<: *get_lambda_zip
+      - <<: *s3_deploy
+  
+  deploy-lambda:
+    <<: *docker-defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - <<: *docker_deploy_build
+      - <<: *terraform_deploy
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - test
+      - build_lambda:
+          context: web-lambdas-api-gateway-dev
+          filters:
+            branches:
+              ignore: master
+          requires:
+            - test
+      - deploy-lambda:
+          context: web-lambdas-api-gateway-dev
+          filters:
+            branches:
+              ignore: master
+          requires:
+            - build_lambda

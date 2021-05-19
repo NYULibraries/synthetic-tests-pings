@@ -1,0 +1,49 @@
+version: "3.7"
+
+x-environment: &x-environment
+  BACKEND_BUCKET: 
+  BACKEND_REGION: 
+  BACKEND_DYNAMODB_TABLE: 
+  AWS_ACCESS_KEY_ID: 
+  AWS_SECRET_ACCESS_KEY: 
+  AWS_DEFAULT_REGION: 
+  SLACK_URL:
+  TF_VAR_lambda_exec_arn: 
+  TF_VAR_lambda_s3_bucket: 
+  TF_VAR_aws_username: 
+  TF_VAR_lambda_version:
+  TF_VAR_environment_variables:
+  TF_VAR_lambda_parent_function_name: synthetic-tests-pings
+
+services:
+
+  fn_create:
+    image: synthetic-tests-pings-create
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+    environment:
+      <<: *x-environment
+    # env_file: dev.env
+    entrypoint: ["./create.sh"]
+  
+  fn_destroy:
+    image: synthetic-tests-pings-destroy
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+    environment:
+      <<: *x-environment
+    # env_file: dev.env
+    entrypoint: ["./destroy.sh"]
+
+  build_lambda:
+    image: synthetic-tests-pings-build
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+      args:
+        production: "true"
+    command: sh -c 'mkdir dist; cat .lambdafiles | xargs zip -r -9 -q ./dist/synthetic-tests-pings.zip'
+    labels:
+      - 'nyulibraries.app=synthetic-tests-pings'

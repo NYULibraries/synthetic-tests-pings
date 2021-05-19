@@ -1,0 +1,13 @@
+specialcollections:
+  BACKEND_KEY: lambdas/tf_state/synthetic_tests_specialcollections
+  TF_VAR_lambda_function_name: synthetic-tests-specialcollections
+  TF_VAR_lambda_description: "Ping test for Special Collections"
+  TF_VAR_lambda_handler: handler.syntheticTest
+  TF_VAR_lambda_runtime: nodejs10.x
+  TF_VAR_lambda_method: GET
+  TF_VAR_lambda_memory_limit: 128
+  TF_VAR_lambda_cw_schedule_expression: "rate(10 minutes)"
+  TEST_URL: "https://specialcollections.library.nyu.edu/"
+  EXPECTED_CODE: 301
+  EXPECTED_RESPONSE_TIME_MS: 600
+  EXPECTED_REDIRECT_LOCATION: "http://specialcollections.library.nyu.edu/search"
