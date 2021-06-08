@@ -13,7 +13,6 @@ x-default-volumes: &default-volumes
     - ./handler.js:/var/task/handler.js
     - ./package.json:/var/task/package.json
     - ./yarn.lock:/var/task/yarn.lock
-    - ./serverless.yml:/var/task/serverless.yml
     - ./jest.config.js:/var/task/jest.config.js
 
 x-test_env: &test-env
@@ -45,7 +44,7 @@ services:
     <<: *node-build
     command: ["yarn", "test"]
     <<: *test-env
-    #<<: *default-volumes
+    # <<: *default-volumes
 
 volumes:
   node_modules:
