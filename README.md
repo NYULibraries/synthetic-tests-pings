@@ -1,5 +1,7 @@
 # Synthetic Tests Pings
 
+[![CircleCI](https://circleci.com/gh/NYULibraries/synthetic-tests-pings.svg?style=shield)](https://circleci.com/gh/NYULibraries/synthetic-tests-pings)
+
 Runs a series of AWS Lambda synthetic tests against NYU Libraries Web Services applications and vendor applications.
 
 Synthetic tests run on a schedule and report based on availability and response time.
@@ -57,7 +59,7 @@ To run this test in different contexts (i.e. how the production lambda would wor
 ## Roadmap
 
 - ~~Deploy via CircleCI - see [other serverless functions](https://github.com/NYULibraries/bobcat-linker/blob/master/.circleci/config.yml) for example~~
-- Create badges for [coverage](https://www.npmjs.com/package/jest-coverage-badges) and CI in this README
+- Create badges for [coverage](https://www.npmjs.com/package/jest-coverage-badges) ~~and CI~~ in this README
 - ~~Include functionality tests using [WebDriver IO](https://webdriver.io/), or the like~~ [Done in its own repo: synthetic-tests-e2e](https://github.com/NYULibraries/synthetic-tests-e2e)
 - Prettifying of messages in Slack
 - Update this README to reflect the actualy usage and functionality.
