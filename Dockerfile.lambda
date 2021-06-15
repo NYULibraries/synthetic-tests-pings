@@ -1,4 +1,5 @@
-# https://hub.docker.com/r/lambci/lambda
-FROM lambci/lambda:nodejs14.x
+# Thanks to https://hub.docker.com/r/amazon/aws-lambda-nodejs
+# Dockerfiles documented in https://github.com/aws/aws-lambda-base-images
+FROM amazon/aws-lambda-nodejs:14
 
 COPY . /var/task
