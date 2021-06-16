@@ -25,7 +25,8 @@ run_handler: &run_handler
   run:
     name: Run handler
     command: |
-      docker-compose run dev handler.syntheticTest
+      docker-compose run -d dev
+      docker-compose run dev_test | jq -e '.Success'
 
 s3_deploy: &s3_deploy
   aws-s3/sync:

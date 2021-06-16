@@ -2,4 +2,6 @@
 # Dockerfiles documented in https://github.com/aws/aws-lambda-base-images
 FROM amazon/aws-lambda-nodejs:14
 
-COPY . /var/task
+COPY . ${LAMBDA_TASK_ROOT}
+
+CMD [ "handler.syntheticTest" ]

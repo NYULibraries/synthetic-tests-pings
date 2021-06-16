@@ -29,11 +29,19 @@ services:
       dockerfile: Dockerfile.lambda
     image: synthetic-tests-pings-lambda
     command: ["handler.syntheticTest"]
+    ports:
+      - '9000:8080'
     <<: *test-env
-    volumes:
-      - node_modules:/var/task/node_modules
+      #    volumes:
+      #      - node_modules:/var/task/node_modules
     depends_on:
       - npm_install
+
+  dev_test:
+    image: appropriate/curl
+    command: ["-vf", '-H', 'Connection: Keep-Alive', "-XPOST", "http://dev:8080/2015-03-31/functions/function/invocations", "-d", "'{\"payload\":\"hello world!\"}'"]
+    depends_on:
+      - dev
 
   npm_install:
     <<: *node-build
