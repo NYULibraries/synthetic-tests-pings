@@ -24,7 +24,7 @@ primo-dev-fe1:
   EXPECTED_CODE: 302
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
-  SLACK_URL: "https://hooks.slack.com/services/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"
+  SLACK_URL: "$SLACK_URL_PRIMO"
 primo-dev-fe2:
   BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_dev_fe2
   TF_VAR_lambda_function_name: synthetic-tests-primo-dev-fe2
@@ -38,7 +38,7 @@ primo-dev-fe2:
   EXPECTED_CODE: 301
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
-  SLACK_URL: "https://hooks.slack.com/services/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"
+  SLACK_URL: "$SLACK_URL_PRIMO"
 primo-prod-fe1:
   BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_prod_fe1
   TF_VAR_lambda_function_name: synthetic-tests-primo-prod-fe1
@@ -52,7 +52,7 @@ primo-prod-fe1:
   EXPECTED_CODE: 302
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
-  SLACK_URL: "https://hooks.slack.com/services/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"
+  SLACK_URL: "$SLACK_URL_PRIMO"
 primo-prod-fe2:
   BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_prod_fe2
   TF_VAR_lambda_function_name: synthetic-tests-primo-prod-fe2
@@ -66,4 +66,5 @@ primo-prod-fe2:
   EXPECTED_CODE: 302
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
-  SLACK_URL: "https://hooks.slack.com/services/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"
+  SLACK_URL: "$SLACK_URL_PRIMO"
+ 
