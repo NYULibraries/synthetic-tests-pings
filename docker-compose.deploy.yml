@@ -8,6 +8,7 @@ x-environment: &x-environment
   AWS_SECRET_ACCESS_KEY: 
   AWS_DEFAULT_REGION: 
   SLACK_URL:
+  SLACK_URL_PRIMO:
   TF_VAR_lambda_exec_arn: 
   TF_VAR_lambda_s3_bucket: 
   TF_VAR_aws_username: 
