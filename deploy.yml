@@ -35,7 +35,7 @@ primo-dev-fe2:
   TF_VAR_lambda_memory_limit: 128
   TF_VAR_lambda_cw_schedule_expression: "rate(10 minutes)"
   TEST_URL: "http://lib-dv-primofe2.bobst.nyu.edu/"
-  EXPECTED_CODE: 301
+  EXPECTED_CODE: 302
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
   SLACK_URL: "$SLACK_URL_PRIMO"
