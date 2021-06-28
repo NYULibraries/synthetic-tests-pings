@@ -4,11 +4,9 @@ const axios = require("axios");
 
 describe("testHttpResponse", () => {
   describe("without a response url", () => {
-    it("should throw an error", () => {
+    it("should throw an error", async () => {
       expect.assertions(1);
-      return syntheticTest
-        .testHttpResponse()
-        .catch((e) => expect(e.message).toMatch("undefined"));
+      return await syntheticTest.testHttpResponse().catch((e) => expect(e.message).toMatch("undefined"));
     });
   });
 
