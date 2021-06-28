@@ -37,7 +37,7 @@ primo-dev-fe2:
   TEST_URL: "http://lib-dv-primofe2.bobst.nyu.edu/"
   EXPECTED_CODE: 302
   EXPECTED_RESPONSE_TIME_MS: 600
-  EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/false"
+  EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
   SLACK_URL: "$SLACK_URL_PRIMO"
 primo-prod-fe1:
   BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_prod_fe1
