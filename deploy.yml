@@ -11,3 +11,60 @@ specialcollections:
   EXPECTED_CODE: 301
   EXPECTED_RESPONSE_TIME_MS: 600
   EXPECTED_REDIRECT_LOCATION: "http://specialcollections.library.nyu.edu/search"
+primo-dev-fe1:
+  BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_dev_fe1
+  TF_VAR_lambda_function_name: synthetic-tests-primo-dev-fe1
+  TF_VAR_lambda_description: "Ping test for Primo Dev FE1"
+  TF_VAR_lambda_handler: handler.syntheticTest
+  TF_VAR_lambda_runtime: nodejs12.x
+  TF_VAR_lambda_method: GET
+  TF_VAR_lambda_memory_limit: 128
+  TF_VAR_lambda_cw_schedule_expression: "rate(10 minutes)"
+  TEST_URL: "http://lib-dv-primofe1.bobst.nyu.edu/"
+  EXPECTED_CODE: 302
+  EXPECTED_RESPONSE_TIME_MS: 600
+  EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
+  SLACK_URL: "$SLACK_URL_PRIMO"
+primo-dev-fe2:
+  BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_dev_fe2
+  TF_VAR_lambda_function_name: synthetic-tests-primo-dev-fe2
+  TF_VAR_lambda_description: "Ping test for Primo Dev FE1"
+  TF_VAR_lambda_handler: handler.syntheticTest
+  TF_VAR_lambda_runtime: nodejs12.x
+  TF_VAR_lambda_method: GET
+  TF_VAR_lambda_memory_limit: 128
+  TF_VAR_lambda_cw_schedule_expression: "rate(10 minutes)"
+  TEST_URL: "http://lib-dv-primofe2.bobst.nyu.edu/"
+  EXPECTED_CODE: 302
+  EXPECTED_RESPONSE_TIME_MS: 600
+  EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
+  SLACK_URL: "$SLACK_URL_PRIMO"
+primo-prod-fe1:
+  BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_prod_fe1
+  TF_VAR_lambda_function_name: synthetic-tests-primo-prod-fe1
+  TF_VAR_lambda_description: "Ping test for Primo Prod FE1"
+  TF_VAR_lambda_handler: handler.syntheticTest
+  TF_VAR_lambda_runtime: nodejs12.x
+  TF_VAR_lambda_method: GET
+  TF_VAR_lambda_memory_limit: 128
+  TF_VAR_lambda_cw_schedule_expression: "rate(10 minutes)"
+  TEST_URL: "http://lib-pr-primofe1.bobst.nyu.edu/"
+  EXPECTED_CODE: 302
+  EXPECTED_RESPONSE_TIME_MS: 600
+  EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
+  SLACK_URL: "$SLACK_URL_PRIMO"
+primo-prod-fe2:
+  BACKEND_KEY: lambdas/tf_state/synthetic_tests_primo_prod_fe2
+  TF_VAR_lambda_function_name: synthetic-tests-primo-prod-fe2
+  TF_VAR_lambda_description: "Ping test for Primo Prod FE1"
+  TF_VAR_lambda_handler: handler.syntheticTest
+  TF_VAR_lambda_runtime: nodejs12.x
+  TF_VAR_lambda_method: GET
+  TF_VAR_lambda_memory_limit: 128
+  TF_VAR_lambda_cw_schedule_expression: "rate(10 minutes)"
+  TEST_URL: "http://lib-pr-primofe2.bobst.nyu.edu/"
+  EXPECTED_CODE: 302
+  EXPECTED_RESPONSE_TIME_MS: 600
+  EXPECTED_REDIRECT_LOCATION: "/primo_library/libweb/action/feRedirect.do"
+  SLACK_URL: "$SLACK_URL_PRIMO"
+ 
