@@ -33,13 +33,18 @@ commands:
       - run:
           name: Zip Lambda files
           command: docker-compose -f docker-compose.deploy.yml run build_lambda
-  build:
+  docker_deploy_build:
     steps:
       - run:
-          name: Build images
+          name: Build deploy images
+          command: |
+            docker-docmpose -f docker-compose.deploy.yml build
+  docker_build:
+    steps:
+      - run:
+          name: Build test images
           command: |
             docker-compose build
-            docker-docmpose -f docker-compose.deploy.yml build
   test: 
     steps:
       - run:
