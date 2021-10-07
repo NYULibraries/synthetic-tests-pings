@@ -38,7 +38,7 @@ commands:
       - run:
           name: Build deploy images
           command: |
-            docker-docmpose -f docker-compose.deploy.yml build
+            docker-compose -f docker-compose.deploy.yml build
   docker_build:
     steps:
       - run:
