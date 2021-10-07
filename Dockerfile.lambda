@@ -1,4 +1,4 @@
 # https://hub.docker.com/r/lambci/lambda
-FROM lambci/lambda:nodejs12.x
+FROM lambci/lambda:nodejs14.x
 
 COPY . /var/task
