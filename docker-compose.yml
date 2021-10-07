@@ -30,8 +30,8 @@ services:
     image: synthetic-tests-pings-lambda
     command: ["handler.syntheticTest"]
     <<: *test-env
-    volumes:
-      - node_modules:/var/task/node_modules
+    # volumes:
+    #   - node_modules:/var/task/node_modules
     depends_on:
       - npm_install
 

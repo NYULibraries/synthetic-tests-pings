@@ -92,7 +92,7 @@ jobs:
           version: 20.10.7
       - docker_build
       - test
-      - run_handler
+      # - run_handler
   
   build-lambda:
     <<: *docker-defaults
