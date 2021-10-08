@@ -1,99 +1,136 @@
 docker-defaults: &docker-defaults
   docker:
-    - image: quay.io/nyulibraries/circleci_docker:18.06.3-dc-1.24.1-0
+    - image: cimg/base:2021.07
   working_directory: ~/app
-
-docker_build: &docker_build
-  run:
-    name: Docker build
-    command: |
-      docker-compose build test dev
-
-docker_deploy_build: &docker_deploy_build
-  run:
-    name: Docker deploy build
-    command: |
-      docker-compose -f docker-compose.deploy.yml build
-
-test: &test
-  run:
-    name: Test
-    command: |
-      docker-compose run test
-
-run_handler: &run_handler
-  run:
-    name: Run handler
-    command: |
-      docker-compose run dev handler.syntheticTest
-
-s3_deploy: &s3_deploy
-  aws-s3/sync:
-    from: dist
-    to: 's3://${TF_VAR_lambda_s3_bucket}/synthetic-tests-pings/${CIRCLE_SHA1}'
-    arguments: |
-      --exclude "*" \
-      --include "synthetic-tests-pings.zip" \
-      --delete
-    overwrite: true
-
-zip: &zip
-  run:
-    name: Zip Lambda files
-    command: docker-compose -f docker-compose.deploy.yml run build_lambda
-
-get_lambda_zip: &get_lambda_zip
-  run:
-    name: Retrieve zipped lambda from container
-    command: |
-      docker cp $(docker ps -aq --filter 'label=nyulibraries.app=synthetic-tests-pings'):/var/task/dist .
-
-terraform_deploy: &terraform_deploy
-  run:
-    name: Deploy the Lambda to AWS via Terraform
-    command: |
-      export TF_VAR_lambda_version=${CIRCLE_SHA1}
-      docker-compose -f docker-compose.deploy.yml run fn_create
 
 version: 2.1
 orbs:
-  aws-s3: circleci/aws-s3@1.0.11
+  aws-s3: circleci/aws-s3@3.0
+commands:
+  clear_old_builds:
+    steps:
+      - run: 
+          name: Clear old S3 builds
+          command: |
+            export S3_BUCKET=${TF_VAR_lambda_s3_bucket}
+            export LAMBDA_FN="synthetic-tests-pings"
+            ./scripts/clear_old_builds.sh
+  terraform_deploy:
+    steps:
+      -  run:
+          name: Deploy the Lambda to AWS via Terraform
+          command: |
+            export TF_VAR_lambda_version=${CIRCLE_SHA1}
+            docker-compose -f docker-compose.deploy.yml run fn_create
+  get_lambda_zip:
+    steps:
+      - run:
+          name: Retrieve zipped lambda from container
+          command: |
+            docker cp $(docker ps -aq --filter 'label=nyulibraries.app=synthetic-tests-pings'):/app/dist .
+  zip: 
+    steps:
+      - run:
+          name: Zip Lambda files
+          command: docker-compose -f docker-compose.deploy.yml run build_lambda
+  docker_deploy_build:
+    steps:
+      - run:
+          name: Build deploy images
+          command: |
+            docker-compose -f docker-compose.deploy.yml build
+  docker_build:
+    steps:
+      - run:
+          name: Build test images
+          command: |
+            docker-compose build
+  test: 
+    steps:
+      - run:
+          name: Test
+          command: docker-compose run test
+  s3_deploy:
+    steps:
+      - aws-s3/sync:
+          from: dist
+          to: 's3://${TF_VAR_lambda_s3_bucket}/synthetic-tests-pings/${CIRCLE_SHA1}'
+          arguments: |
+            --exclude "*" \
+            --include "synthetic-tests-pings.zip" \
+            --delete
+  run_handler:
+    steps:
+      - run:
+          name: Run handler
+          command: |
+            docker-compose run dev handler.syntheticTest
+  install_awscli:
+    steps:
+      - run:
+          name: Install AWS-CLI
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
 jobs:
+  clear-old-builds:
+    <<: *docker-defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.7
+      - install_awscli
+      - clear_old_builds
+
   test:
     <<: *docker-defaults
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
-      - *docker_build
-      - *test
-      - *run_handler
+          version: 20.10.7
+      - docker_build
+      - test
+      - run_handler
   
   build-lambda:
     <<: *docker-defaults
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
-      - <<: *docker_deploy_build
-      - <<: *zip
-      - <<: *get_lambda_zip
-      - <<: *s3_deploy
+          version: 20.10.7
+      - docker_deploy_build
+      - zip
+      - get_lambda_zip
+      - s3_deploy
   
   deploy-lambda:
     <<: *docker-defaults
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
-      - <<: *docker_deploy_build
-      - <<: *terraform_deploy
+          version: 20.10.7
+      - docker_deploy_build
+      - terraform_deploy
 
 workflows:
   version: 2
   build-test-and-deploy:
     jobs:
       - test
+      - clear-old-builds:
+          context: web-lambdas-api-gateway-dev
+          name: clear-old-builds-dev
+          filters:
+            branches:
+              ignore: master
+      - clear-old-builds:
+          context: web-lambdas-api-gateway-prod
+          name: clear-old-builds-prod
+          filters:
+            branches:
+              only: master
       - build-lambda:
           context: web-lambdas-api-gateway-dev
           filters:
@@ -101,6 +138,7 @@ workflows:
               ignore: master
           requires:
             - test
+            - clear-old-builds-dev
       - deploy-lambda:
           context: web-lambdas-api-gateway-dev
           filters:
@@ -116,6 +154,7 @@ workflows:
               only: master
           requires:
             - test
+            - clear-old-builds-prod
       - deploy-lambda:
           context: web-lambdas-api-gateway-prod
           filters:

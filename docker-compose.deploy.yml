@@ -7,14 +7,18 @@ x-environment: &x-environment
   AWS_ACCESS_KEY_ID: 
   AWS_SECRET_ACCESS_KEY: 
   AWS_DEFAULT_REGION: 
-  SLACK_URL:
-  SLACK_URL_PRIMO:
   TF_VAR_lambda_exec_arn: 
   TF_VAR_lambda_s3_bucket: 
   TF_VAR_aws_username: 
   TF_VAR_lambda_version:
   TF_VAR_environment_variables:
   TF_VAR_lambda_parent_function_name: synthetic-tests-pings
+  SLACK_URL:
+  TEST_URL:
+  SLACK_URL_PRIMO:
+  EXPECTED_CODE:
+  EXPECTED_RESPONSE_TIME_MS:
+  EXPECTED_REDIRECT_LOCATION:
 
 services:
 

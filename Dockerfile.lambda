@@ -1,4 +1,11 @@
+FROM node:14-alpine AS npm_install
+
+COPY package.json yarn.lock /tmp/
+RUN cd /tmp && yarn install --frozen-lockfile --ignore-optional --production
+
 # https://hub.docker.com/r/lambci/lambda
 FROM lambci/lambda:nodejs12.x
 
 COPY . /var/task
+
+COPY --from=npm_install /tmp/node_modules ./
